@@ -1,0 +1,14 @@
+---
+  - name: "Ansible local connection for accessing ansible facts"
+    hosts: localhost
+    connection: local 
+    tasks:
+    
+    # Print out all ansible facts
+    #- debug: var=ansible_facts
+
+    - debug:
+        var: ansible_facts['dns']
+
+    - debug: 
+        var: ansible_dns
