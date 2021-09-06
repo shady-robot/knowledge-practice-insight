@@ -34,7 +34,7 @@ Programming paradigms are not so much competitive as they are complementary.
 * **linking**: the process of combining all the individual object files into an
   executable file
 
-![compilation process](../images/chapter1_compilation_process.png)
+![compilation process](./images/chapter1_compilation_process.png)
 
 ## The structure of a C++ program
 
@@ -154,8 +154,27 @@ uses the value of the main function to report the status of the entire program.
 A value of 0 indicates success, any other value is taken as an indication of
 failure.
 
+### Exercises
+
+* exercises-4
+
+  ![exercises-4](./images/chapter1_exercise4.png)
+  solution: [SumOddInteger.cpp](./codes/SumOddInteger.cpp)
+
+* exercises-8
+
+  ![exercises-8](./images/chapter1_exercise8.png)
+  solution: [ReverseDigits.cpp](./codes/ReverseDigits.cpp)
+
+* exercises-9
+
+  ![exercises-9](./images/chapter1_exercise9.png)
+  solution: [PrimeFactorization.cpp](./codes/PrimeFactorization.cpp)
+
 ## Source Code
 
 * [HelloWorld.cpp](./codes/HelloWorld.cpp)
 * [PowerOfTwo.cpp](./codes/PowerOfTwo.cpp)
 * [AddIntegerList.cpp](./codes/AddIntegerList.cpp)
+* [Countdown.cpp](./codes/Countdown.cpp)
+* [SumOddInteger.cpp](./codes/SumOddInteger.cpp)
