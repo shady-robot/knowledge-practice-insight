@@ -66,7 +66,10 @@ header file is a system library that is part of standard C++.
 * **header file**: A header file is a file with extension .h which contains C
   function declarations and macro definitions to be shared between several
   source files.
-* **namespace**:
+* **namespace**: In computing, a namespace is a set of signs (names) that are
+  used to identify and refer to objects of various kinds. A namespace ensures
+  that all of a given set of objects have unique names so that they can be
+  easily identified.
 
 ### Header files
 
