@@ -63,45 +63,74 @@ British Accent.
 
 ## IELTS Listening in detail
 
-### Listening - Form Completion
+### Multiple choice
+
+ In multiple choice tasks, there is a question followed by three possible
+ answers, or the beginning of a sentence followed by three possible ways
+ to complete the sentence. Test takers are required to choose the one correct
+ answer - A, B or C.
+
+* Lot to read and listen at the same time.(Speed reading: 350w-400w/minutes)
+* Concise the information
+
+### Matching
+
+Test takers are required to match a numbered list of items from the listening
+text to a set of options on the question paper. The set of options may be
+criteria of some kind.
+
+* When in doubt, keep two answers.
+
+### Plan, map, diagram labelling
+
+Test takers are required to complete labels on a plan (eg of a building),
+map (eg of part of a town) or diagram (e.g. of a piece of equipment).
+The answers are usually selected from a list on the question paper.
+
+* Origin or starting point [Always recognize the starting point]
+* Follow using a pointer [Guided by the audio]
+* Keep an eye on the Landmarks
+* Basic Direction Related Vocabulary
+
+![Vocabulary related to map labelling](../../images/direction.png)
+
+### Form, note, table, flow-chart, summary completion
+
+Test takers are required to fill in the gaps in an outline of part or of all
+of the listening text. The outline will focus on the main ideas/facts in
+the text. It may be:
+
+1. a form: often used to record factual details such as names
+2. a set of notes: used to summarize any type of information using the layout
+  to show how different items relate to one another
+3. a table: used as a way of summarizing information which relates to clear
+  categories – e.g. place/time/price,
+4. a flow-chart: used to summarize a process which has clear stages, with the
+  direction of the process shown by arrows.
 
 * Always read the constructions
-* Predictions
-* Sequence
+* Predictions[number or noun or time]
+* Information in a sequence
+* Rows and columns
 * Units and Names[$, kg, pm]
 
-### Listening - Table Completion
+### Sentence Completion
 
-* Rows and columns
-* Predictions [number or noun or time]
-* Units
-
-### Listening  - Sentence Completion
+Test takers are required to read a set of sentences summarizing key information
+from all the listening text or from one part of it. They then fill a gap in each
+sentence using information from the listening text.
 
 * Read and predict. [read before audio, and predict the answer]
 * Sentence can be paraphrased.[Answers have to be exact words]
 * If it doesn't fit grammatically, its incorrect.
+* Write the answers as quick as possible in question paper.
 
-Please write the answers as quick as possible in question paper.
+### Short-answer questions
 
-### Listening - Multiple Choice Questions
-
-Lot to read and listen at the same time.
-
-* Speed reading: 350w-400w/minutes
-* Concise the information
-
-Why did I not get the right answer?
-Why did I fall for the wrong answer?
-
-### Listening - Short Answers
+ Test takers are required to read a question and then write a short answer
+ using information from the listening text.
 
 * W-Questions: When What Why
-* Answer - no longer than 4 words
-* Not that difficult
-
-Pointers:
-
 * Number of words
 * Guessing answers for questions
 * Stay ahead of the audio
@@ -109,36 +138,14 @@ Pointers:
 * Synonyms
 * Spelling
 
-Spelling mistake = incorrect answer
+## IELTS Listening - marked
 
-### Listening - Map Labelling
+A Band Score conversion table is produced for each version of the Listening test
+which translates scores out of 40 into the IELTS 9-band scale. Scores are
+reported in whole bands and half bands.
 
-* Not that difficult
+One mark is awarded for each correct answer in the 40-item test. Care should be
+taken when writing answers on the answer sheet as poor spelling and grammar
+are penalised.
 
-#### Types
-
-* Question in the image
-* Question outside the image
-
-#### Pointers
-
-* Origin or starting point [Always recognize the starting point]
-* Follow using a pointer [Guided by the audio]
-* Keep an eye on the Landmarks
-* Basic Direction Related Vocabulary
-
-### Listening - Flow Chart Completion
-
-Information in a sequence.
-[Section2 or Section3]
-
-* Headers - Helps to understand the flow chart
-* Sequence
-* Follow the speaker even when there are no blanks.
-* Predict
-
-### Listening - Matching
-
-Matching the given options with the subject
-
-When in doubt, keep two answers.
+![IELTS Listening Scores](../../images/listening-scores.png)

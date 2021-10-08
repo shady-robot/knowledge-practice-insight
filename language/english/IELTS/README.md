@@ -36,8 +36,7 @@ the test. IELTS is graded on a scale of 1-9.
 
 ![ielts-band-score.jpeg](./images/ielts-band-score.jpeg)
 
-* [ielts scores explained](https://takeielts.britishcouncil.org/teach-ielts/
-  test-information/ielts-scores-explained)
+* [ielts scores explained](https://takeielts.britishcouncil.org/teach-ielts/test-information/ielts-scores-explained)
 * [ielts-band-scores](https://ieltsliz.com/ielts-band-scores/)
 
 ## Modules
