@@ -12,8 +12,12 @@ Refer to [Markdown Basic Syntax][basic syntax] for basic usage.
 
 To create inner document links in markdown in Github use the following syntax,
 since Github automatically parses anchor tags out of your headers.
-**(NOTE: just one \# for all heading sizes, no space between \# and anchor name,
-anchor tag names must be lowercase, and delimited by dashes if multi-word.)**
+
+### Syntax
+
+* Use one \# for all heading sizes
+* No space between \# and anchor name
+* Anchor tag names must be lowercase, and delimited by dashes if multi-word
 
 ```markdown
 # Contents
