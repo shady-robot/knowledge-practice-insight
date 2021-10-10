@@ -67,14 +67,8 @@ parameters. To indicate that a parameter is optional, you need to do is include
 an initial value in the declaration of that parameter in the function prototype.
 
 * The specification of the default value appears only in the function prototype
-* and not in the function definition.
+  and not in the function definition.
 * Any default parameters must appear at the end of the parameter list.
-
-## The mechanics of function calls
-
-stack frame
-
-return type problem
 
 ### The combinations function
 
@@ -172,6 +166,14 @@ The rules of C++ ensure that static local variables are initialized exactly once
 and, moreover, that the initialization occurs before the function containing
 them is called.
 
+Local variables have `automatic duration` by default, which means they are
+created at the point of definition, and destroyed when the block is exited.
+Using the `static` keyword on a local variable changes its duration from
+`automatic duration` to `static duration`. This means the varaible is now
+created at the start of the program, and destroyed at the end of the program.
+Static local variables are only initialized the first time the code is executed,
+not on subsequent calls.
+
 ```c++
 static bool initialized = false;
 ```
@@ -193,3 +195,60 @@ g++ -c main.cpp
 g++ myclass.o main.o
 ./a.out
 ```
+
+## Review Questions
+
+<details>
+  <summary>What is a predicate function?</summary>
+
+  A predicate is a function that tests for some condition involving its
+  arguments and returns nil if the condition is false, or some non-nil value if
+  the condition is true. You use predicate functions to check if your input
+  meets some condition.
+
+  > A logical expression which evaluates to TRUE or FALSE, normally to direct
+  the execution path in code.
+
+</details>
+
+<details>
+  <summary>What is meant by the term overloading? How does the C++ compiler use
+  signatures to implement overloading?</summary>
+
+  Overloading refers to a set of processes in computer programming by which one
+  special word or symbol may be given multiple meanings.
+
+  C++ allows specification of more than one function of the same name in the
+  same scope. These functions are called overloaded functions. Overloaded
+  functions enable you to supply different semantics for a function, depending
+  on the types and number of arguments.
+
+  refer the [overloading](#overloading) section above.
+
+</details>
+
+<details>
+  <summary>What is a stack frame?</summary>
+
+  The call stack is divided up into contiguous pieces called stack framew, or
+  frames for short; each frame is the data associated with one call to one
+  function. The frame contains the arguments given to the function, the
+  function's local variables, and the address at which the function is
+  executing.
+
+  When your program is started, the stack has only one frame, that of the
+  function main(). This is called the initial frame or the outermost frame.
+  Each time a function is called, a new frame is made. Each time a function
+  returns, the frame for that function invocation is eliminated. If a function
+  is recursive, there can be many frames for the same function. The frame for
+  the function in which execution is actually occurring is called the innermost
+  frame. This is the most recently created of all the stack frames that still
+  exist.
+
+  Inside your program, stack frames are identified by their addresses. A stack
+  frame consists of many bytes, each of which has its own address; each kind of
+  computer has a convention for choosing one byte whose address serves as the
+  address of the frame. Usually this address is kept in a register called the
+  frame pointer register while execution is going on in that frame.
+
+</details>
