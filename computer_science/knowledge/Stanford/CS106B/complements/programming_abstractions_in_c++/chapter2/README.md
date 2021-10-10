@@ -175,3 +175,21 @@ them is called.
 ```c++
 static bool initialized = false;
 ```
+
+### compile multiple cpp files
+
+Use the following method only if you don't care about makefile.
+
+```shell
+# wildcard
+g++ *.cpp -o output
+
+# specify all cpp file
+g++ filename1.cpp filename2.cpp main.cpp -o output
+
+# generate .o file separately.
+g++ -c myclass.cpp
+g++ -c main.cpp
+g++ myclass.o main.o
+./a.out
+```
