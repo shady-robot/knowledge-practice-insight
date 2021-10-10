@@ -157,7 +157,7 @@ uses the value of the main function to report the status of the entire program.
 A value of 0 indicates success, any other value is taken as an indication of
 failure.
 
-### Exercises
+## Exercises
 
 * exercises-4
 

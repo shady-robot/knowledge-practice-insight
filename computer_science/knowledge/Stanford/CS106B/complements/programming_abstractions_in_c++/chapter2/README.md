@@ -158,7 +158,7 @@ mathematical calculations to the last value it produced. The initial value -
 the value that is used to get the entire process started - is called the seed
 for the random number generator.
 
-![Random Steps](../images/random_step.png)
+![Random Steps](./images/random_step.png)
 
 ### static local variable
 
@@ -252,3 +252,25 @@ g++ myclass.o main.o
   frame pointer register while execution is going on in that frame.
 
 </details>
+
+## Exercises
+
+* exercises-6
+
+  ![exercises-6](./images/chapter2_ex6.png)
+  solution: [Prime.cpp](./codes/exercises/Prime.cpp)
+
+* exercises-10
+
+  ![exercises-10](./images/chapter2_ex10.png)
+  solution: [ReverseDigits.cpp](./codes/ReverseDigits.cpp)
+
+* exercises-16
+
+  ![exercises-16](./images/chapter2_ex16.png)
+  solution: [ReverseDigits.cpp](./codes/ReverseDigits.cpp)
+
+## Source Code
+
+* [HelloWorld.cpp](./codes/HelloWorld.cpp)
+* [PowerOfTwo.cpp](./codes/PowerOfTwo.cpp)
