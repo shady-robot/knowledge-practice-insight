@@ -1,6 +1,8 @@
 # CS106B Programming Abstractions
 
-CS106B will give you the tools to solve more complex computational problems while focusing on the theme of abstraction, all using the C++ programming language.
+CS106B will give you the tools to solve more complex computational problems
+while focusing on the theme of abstraction, all using the C++ programming
+language.
 
 ## Course Meta
 

@@ -257,20 +257,23 @@ g++ myclass.o main.o
 
 * exercises-6
 
-  ![exercises-6](./images/chapter2_ex6.png)
+  ![exercises-6](./img/chapter2_ex6.png)
   solution: [Prime.cpp](./codes/exercises/Prime.cpp)
 
 * exercises-10
 
-  ![exercises-10](./images/chapter2_ex10.png)
-  solution: [ReverseDigits.cpp](./codes/ReverseDigits.cpp)
+  ![exercises-10](./img/chapter2_ex10.png)
+  solution:
+  * [combinatorics.h](./codes/exercises/combinatorics.h)
+  * [combinatorics.cpp](./codes/exercises/combinatorics.cpp)
 
 * exercises-16
 
-  ![exercises-16](./images/chapter2_ex16.png)
-  solution: [ReverseDigits.cpp](./codes/ReverseDigits.cpp)
+  ![exercises-16](./img/chapter2_ex16.png)
+  solution: [Rainbow Project](./codes/exercises/Rainbow)
+  ![exercises-16](./img/chapter2_ex16_rainbow.png)
 
 ## Source Code
 
-* [HelloWorld.cpp](./codes/HelloWorld.cpp)
-* [PowerOfTwo.cpp](./codes/PowerOfTwo.cpp)
+* [Combination.cpp](./codes/Combinations.cpp)
+* [Quadratic.cpp](./codes/Quadratic.cpp)

@@ -2,9 +2,12 @@
  * File: GraphicsExample.cpp
  * -------------------------
  *  This program illustrates the use of graphics using the GWindow class.
+ *
+ * Need to utilize the Stanford Libraries to get the "gwindow" libraries 
+ * linked.
  */
 
-#include "gwindow.h";
+#include "gwindow.h"
 
 /* Prototypes */
 
@@ -33,7 +36,7 @@ void drawDiamond(GWindow & gw){
     gw.drawLine(0, height / 2, width / 2, 0);
     gw.drawLine(width / 2, 0, width, height / 2);
     gw.drawLine(width, height / 2, width / 2, height);
-    gw.drawLine(width / 2, height / 2, height, 0, height / 2);
+    gw.drawLine(width / 2, height / 2, height, height / 2);
 }
 
 /* Function: drawRectangleAndOval

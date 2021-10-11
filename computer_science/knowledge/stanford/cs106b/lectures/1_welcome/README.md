@@ -15,11 +15,13 @@ CS education is more than just "learning to code"!
 * **Computer science** as an academic discipline
 * **Computational thinking** as a problem-solving process
 
-### What is abstractions?
+### What is abstractions
 
-> Design that hides the details of how something works while still allowing the user to access complex functionality.
+> Design that hides the details of how something works while still allowing the
+> user to access complex functionality.
 
-Programming languages are abstractions through which we communicate with computers.
+Programming languages are abstractions through which we communicate with
+computers.
 
 ![CS106B Roadmap](../images/lecture_1_abstractions.png)
 
@@ -27,4 +29,5 @@ Programming languages are abstractions through which we communicate with compute
 
 ![CS106B Roadmap](../images/lecture_1_roadmap.png)
 
-[1]:<https://web.stanford.edu/class/cs106b/lectures/01-welcome/Lecture1Slides.pdf> "lecture slides"
+[1]:<https://web.stanford.edu/class/cs106b/lectures/01-welcome/Lecture1Slides.pdf>
+"lecture slides"
