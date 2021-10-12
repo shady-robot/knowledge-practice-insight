@@ -33,7 +33,7 @@ more control to choose either execution speed or cross-platform compatibility.
 
 #### Naming conventions
 
-C++ uses the camelCace naming convention.
+C++ uses the camelCase naming convention.
 
 #### types and values
 
