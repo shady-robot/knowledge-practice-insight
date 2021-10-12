@@ -89,12 +89,12 @@ Code: [PigLatin.cpp](./codes/PigLatin.cpp)
 * exercises-18
 
   ![exercises-18](./images/chapter3_ex18.png)
-  solution:
+  solution:solution: [LetterSubstitutionCipher.cpp](./codes/exercises/LetterSubstitutionCipher.cpp)
 
 * exercises-19
 
   ![exercises-19](./images/chapter3_ex19.jpeg)
-  solution:
+  solution:solution: [LetterSubstitutionCipher.cpp](./codes/exercises/LetterSubstitutionCipher.cpp)
 
 ## References
 
