@@ -3,6 +3,9 @@
     "iostream": "cpp",
     "ostream": "cpp",
     "istream": "cpp",
-    "iosfwd": "cpp"
+    "iosfwd": "cpp",
+    "typeinfo": "cpp",
+    "__bit_reference": "cpp",
+    "algorithm": "cpp"
   }
 }

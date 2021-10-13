@@ -148,12 +148,7 @@ hierarchy that supports the operations you need.
 * exercises-11
 
 ![exercises-11](./images/chapter4_ex11.png)
-solution: [SentencePalindrome](./codes/exercises/SentencePalindrome.cpp)
-
-* exercises-12
-
-  ![exercises-12](./images/chapter4_ex12.jpeg)
-  solution: [RegularPlural.cpp](./codes/exercises/RegularPlural.cpp)
+solution: [StringReal](./codes/exercises/StringReal.cpp)
 
 [1]:<http://www.cplusplus.com/reference/library/manipulators/>
 [2]:<http://www.cplusplus.com/reference/fstream/ifstream/?kw=ifstream>
