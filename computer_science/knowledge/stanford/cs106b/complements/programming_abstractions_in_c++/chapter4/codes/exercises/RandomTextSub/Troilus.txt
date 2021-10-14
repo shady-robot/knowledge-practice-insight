@@ -1,0 +1,10 @@
+Of course, if you have to re-implement this functionality.
+there’s NOTHING for it.
+
+To get the numeric value from a digit character,
+you can exploit that the character codes of the decimal digits 0–9 are consecutive.
+
+
+
+
+So the following function can covert them: 453
