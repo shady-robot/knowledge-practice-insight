@@ -31,6 +31,8 @@ Ansible uses an inventory to communicate with your servers.
 ansible -i hosts.ini example -m ping -u [username]
 ```
 
+refer to [inventory](./codes/host.ini) for demo.
+
 ## References
 
 * [Configuration Management](https://www.plutora.com/blog/configuration-management)
