@@ -19,6 +19,7 @@ Certain settings in Ansible are adjustable via a configuration file
 but there may be reasons you would want to change them.
 
 ```ini
+
 [defaults]
 inventory = hosts.ini
 remote_user = root
