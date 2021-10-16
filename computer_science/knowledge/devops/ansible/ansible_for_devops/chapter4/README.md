@@ -26,7 +26,7 @@ before you actually run it, use `--list-hosts`
 
 ## Node App Example
 
-Refer to [node](./codes/code) for node server project demo.
+Refer to [node](./codes/nodeapp) for node server project demo.
 
 ## References
 

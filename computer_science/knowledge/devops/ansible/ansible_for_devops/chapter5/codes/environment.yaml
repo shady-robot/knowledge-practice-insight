@@ -1,0 +1,47 @@
+---
+- hosts: all 
+  become: yes
+  tasks:
+    # System wide
+    - name: Add an environment variable system wide.
+      lineinfile:
+        dest: /etc/environment
+        regexp: '^SYSTEM_VAR='
+        line: "SYSTEM_VAR=system"
+
+    - name: Get the value of the environment variable.
+      shell: 'echo $SYSTEM_VAR'
+      register: system
+
+    - name: Print the system-wide environment variable.
+      debug:
+        msg: "The variable is {{ system.stdout }}"
+
+
+    # Section wide
+    - name: Add an environment variable to the remote user's shell
+      lineinfile:
+        dest: ~/.bashrc
+        regexp: '^export SECTION_VAR='
+        line: "export SECTION_VAR=section"
+
+    - name: Get the value of the environment variable we just added.
+      shell: 'source ~/.bashrc && echo $SECTION_VAR'
+      register: section
+
+    - name: Print the section-wide environment variable.
+      debug:
+        msg: "The variable is {{ section.stdout }}"
+
+    - name: Environment in current task scope.
+      shell: 'echo $TASK_ENV_VAR'
+      environment:
+        TASK_ENV_VAR: "nonpersistent"
+      register: task_env_var
+
+    - name: Print the value of the environment TASK_ENV_VAR.
+      debug:
+        msg: "The variable is {{ task_env_var.stdout }}"
+
+
+# vim:fenc=utf-8
