@@ -1,0 +1,16 @@
+---
+- hosts: all
+  gather_facts: no
+
+  vars_files:
+    - vars/api_key.yml
+
+  tasks:
+    - name: Echo the API key which was injected into the env.
+      shell: echo $API_KEY
+      environment:
+        API_KEY: "{{ myapp_api_key }}"
+      register: echo_result
+
+    - name: Show the result
+      debg: var=echo_result.stdout
