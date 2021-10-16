@@ -7,15 +7,15 @@ globally unique name.
 
 ```yaml
 handlers:
-    - name: restart apache
-      service: name=apache2 state=restarted
+  - name: restart apache
+    service: name=apache2 state=restarted
 
 tasks:
-    - name: Enable Apache rewrite module.
-      apache2_module: name=rewrite state=present
-      notify:
-        - restart apache
-        - restart memcached
+  - name: Enable Apache rewrite module.
+    apache2_module: name=rewrite state=present
+    notify:
+      - restart apache
+      - restart memcached
 ```
 
 By default, handlers run after all the tasks in a particular play have been
@@ -105,6 +105,8 @@ refer to [EnvironmentVariables.yaml](./codes/environment.yaml) for demo.
 ### [Conditionals](./conditionals.md)
 
 ### [Error Handling](./error_handling.md)
+
+### [Delegation Local Action](./delegation_local.md)
 
 ## References
 
