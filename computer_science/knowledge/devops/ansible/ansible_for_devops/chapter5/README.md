@@ -98,6 +98,12 @@ file `/etc/environment` using the following syntax.
 
 refer to [EnvironmentVariables.yaml](./codes/environment.yaml) for demo.
 
+## Other topics
+
+### [Variables](./variables.md)
+
+### [Conditionals](./conditionals.md)
+
 ## References
 
 * [environment variables](https://docs.ansible.com/ansible/latest/user_guide/playbooks_environment.html)

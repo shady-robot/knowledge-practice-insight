@@ -122,7 +122,7 @@ text, the vault password.
 
 refer to [vaults](./codes/vaults) for demo.
 
-## Variable precedence
+## Variables precedence
 
 In general, Ansible gives precedence to variables that were defined more
 recently, more actively, and with more explicit scope. Variables in the
