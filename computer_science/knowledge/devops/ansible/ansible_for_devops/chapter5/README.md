@@ -104,6 +104,8 @@ refer to [EnvironmentVariables.yaml](./codes/environment.yaml) for demo.
 
 ### [Conditionals](./conditionals.md)
 
+### [Error Handling](./error_handling.md)
+
 ## References
 
 * [environment variables](https://docs.ansible.com/ansible/latest/user_guide/playbooks_environment.html)
