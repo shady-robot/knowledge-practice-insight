@@ -1,0 +1,12 @@
+---
+roles:
+  # From Ansible Galaxy, latest version
+  - name: geerlingguy.firewall
+  # From Ansible Galaxy, specifying the version
+  - name: geerlingguy.php
+    version: 4.3.1
+  # From Github, with a custom name and version
+  - name: passenger
+    src: https://github.com/geerlingguy/ansible-role-passenger
+    version: 2.0.0
+
