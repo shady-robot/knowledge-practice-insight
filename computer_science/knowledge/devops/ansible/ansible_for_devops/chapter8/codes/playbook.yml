@@ -1,0 +1,36 @@
+---
+# Set up basic, standardized components across all servers. 
+- hosts: all
+  become: yes
+  roles:
+    - secutiry
+    - logging
+    - firewall
+
+# Configure web application servers.
+- hosts: servercheck-web
+  roles:
+    - nginx
+    - php
+    - servercheck-web
+
+# Configure database servers
+- hosts: servercheck-db
+  roles:
+    - pgsql
+    - db-tuning
+
+# configure logging server.
+- hosts: servercheck-log
+  roles:
+    - java
+    - elasticsearch
+    - logstash
+    - kibana
+
+# Configure Node.js application servers.
+- hosts: servercheck-nodejs
+  roles:
+    - servercheck-node
+
+
