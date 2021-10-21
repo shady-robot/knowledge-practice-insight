@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.db.models import Max
+from django.contrib.auth.decorators import login_required
 import json
 import random
 
@@ -9,17 +10,31 @@ import random
 from .models import Pizza
 
 
+@login_required
 def index(request, pid):
-    try:
-        pizza = Pizza.objects.get(id=pid)
+    if request.method == "POST":
+        data = json.loads(request.body)
+        new_pizza = Pizza.objects.create(
+            title=data["title"], description=data["description"], creator=request.user
+        )
+        new_pizza.save()
         data = {
-            "id": pizza.id,
-            "title": pizza.title,
-            "description": pizza.description,
+            "id": new_pizza.pizza.id,
+            "title": new_pizza.title,
+            "description": new_pizza.description,
         }
-    except Pizza.DoesNotExist:
-        data = {"status": "error", "message": "pizza not found"}
-    return HttpResponse(json.dumps(data), content_type="application/json",)
+        return HttpResponse(json.dumps(data), content_type="application/json",)
+    elif request.method == "GET":
+        try:
+            pizza = Pizza.objects.get(id=pid)
+            data = {
+                "id": pizza.id,
+                "title": pizza.title,
+                "description": pizza.description,
+            }
+        except Pizza.DoesNotExist:
+            data = {"status": "error", "message": "pizza not found"}
+        return HttpResponse(json.dumps(data), content_type="application/json",)
 
 
 def get_random():
