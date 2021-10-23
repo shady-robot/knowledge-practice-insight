@@ -1,0 +1,18 @@
+{% block title %}Login{% endblock %}
+
+
+{% if messages %}
+    {% for message in messages %}
+        {{ message|safe }}
+    {% endfor %}
+{% endif %}
+
+{% block content %}
+
+    <h2>Login</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Login</button>
+    </form>
+{% endblock %}
