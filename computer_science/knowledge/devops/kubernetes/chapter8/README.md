@@ -23,3 +23,24 @@ One of the key themes that runs through Kubernetes is decoupling. In particular,
 it's important that all of the core concept of Kubernetes are modular with
 respect to each other and that they are swappable and replaceable with other
 components.
+
+ReplicaSets create and manage Pods, they do not own the Pods they create.
+ReplicaSets use label queries to identify the set of Pods they should be
+managing.
+
+### Designing with ReplicaSets
+
+ReplicaSets are designed to represent single, scalable microservice inside your
+architecture. They key characteristic of ReplicaSets is that every Pod that is
+created by the ReplicaSet controller is entirely homogeneous. Typically, these
+Pods are then fronted by a Kubernetes service load balancer, which spreads
+traffic across the Pods that make up the service.
+
+refer to [kuard_rs.yaml](./kuard_rs.yaml) for ReplicaSet demo.
+
+```shell
+kubectl scale kuard --replicas=4
+kubectl autoscale rs kuard --min=2 --max=5 --cpu-percent=80
+kubectl delete rs kuard
+ kubectl delete rs kuard --cascade=false
+```
