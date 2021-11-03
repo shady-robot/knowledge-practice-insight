@@ -1,0 +1,3 @@
+# This is a config file that used to configure an application
+parameter1 = value1
+parameter2 = value2
