@@ -1,0 +1,13 @@
+
+
+{
+  "apiVersion": "v1",
+  "kind": "Namespace",
+  "metadata": {
+    "name": "etcd-operator-7f9d8dcffb-zgh2v",
+    "labels": {
+      "name": "etcd-operator-7f9d8dcffb-zgh2v"
+    }
+  }
+}
+
