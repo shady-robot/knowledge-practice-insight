@@ -20,10 +20,6 @@
 *.dylib
 *.dll
 
-# Fortran module files
-*.mod
-*.smod
-
 # Compiled Static libraries
 *.lai
 *.la
@@ -98,3 +94,12 @@ migrations/
 
 .env
 db.sqlite3
+
+
+#######################
+# Go
+########################
+# Binaries for programs and plugins
+*.exe~
+# Test binary, built with `go test -c`
+*.test
