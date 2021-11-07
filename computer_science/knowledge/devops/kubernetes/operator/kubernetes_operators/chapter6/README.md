@@ -49,54 +49,98 @@ themselves.
 
 1. Create a project
 
-  ```shell
-  $ mkdir visitorapp-operator
-  $ cd visitorapp-operator
-  # Run the `open-sdk init` command with `ansible` plugin to initialize the project
-  $ open-sdk init --plugin=ansible --domain=example.com
-  ```
+   ```shell
+   $ mkdir visitorapp-operator
+   $ cd visitorapp-operator
+   # Run the `open-sdk init` command with `ansible` plugin to initialize the project
+   $ open-sdk init --plugin=ansible --domain=example.com
+   ```
 
-1. Create an API
+2. Create an API
 
-  ```shell
-  $ mkdir visitorapp-operator
-  $ cd visitorapp-operator
-  # Run the `open-sdk init` command with `ansible` plugin to initialize the project
-  $ open-sdk init --plugin=ansible --domain=example.com
-  ```
+   ```shell
+   $ mkdir visitorapp-operator
+   $ cd visitorapp-operator
+   # Run the `open-sdk init` command with `ansible` plugin to initialize the project
+   $ open-sdk init --plugin=ansible --domain=example.com
+   ```
 
-1. Create an API
+3. Create an API
 
-```shell
-$ operator-sdk create api --version v1  --kind VisitorsApp --generate-role
-# Implement the ansible role logic
-$ cd ./roles/visitorsapp
-$ wget https://github.com/kubernetes-operators-book/chapters/releases/download/1.0.0/visitors-ansible.tgz
-$ tar -zxvf visitors-ansible.tgz
-```
+   ```shell
+   $ operator-sdk create api --version v1  --kind VisitorsApp --group app --generate-role
+   # Implement the ansible role logic
+   $ cd ./roles/visitorsapp
+   $ wget https://github.com/kubernetes-operators-book/chapters/releases/download/1.0.0/visitors-ansible.tgz
+   $ tar -zxvf visitors-ansible.tgz
+   ```
 
-1. Build and push the Operator image
+4. Build and push the Operator image
 
-Use the default `Makefile` targets to build and push your operator. Set `IMG`
-with a pull spec for your image that uses a registry you can push to.
+    Use the default `Makefile` targets to build and push your operator. Set
+    `IMG` with a pull spec for your image that uses a registry you can push to.
+    Your Makefile composes image tags either from values written at the project
+    initialization or from CLI. In particular, `IMAGE_TAG_BASE` lets you define
+    a common image registry, namespace, and partial name for all your image
+    tags.
 
-```shell
-make docker-build docker-push IMG=<registry>/<user>/<image_name>:<tag>
-# docker.io/username/visitorsapp-operator:v0.0.1
-```
+   ```makefile
+   -IMG ?= controller:latest
+   +IMG ?= $(IMAGE_TAG_BASE):$(VERSION)
+   ```
 
-1. Run the Operator
+   ```shell
+   # If you already set the IMG related vars in Makrfile, just run.
+   $ make docker-build docker-push
 
-```shell
-# Install the CRD
-$ make install
+   # Otherwise specific IMG by command line
+   # eg. IMG=docker.io/username/visitorsapp-operator:v0.0.1
+   $ make docker-build docker-push IMG=<registry>/<user>/<image_name>:<tag>
+   ```
 
-# Deploy the project to the cluster.
-$ make deploy  IMG=<registry>/<user>/<image_name>:<tag>
-```
+5. Run the Operator
 
-1. Create a sample custom resource (CR)
+   ```shell
+    # Run local outside the cluster
+    $ make install run
 
-```shell
- $ kubectl apply -f config/samples/ \
-```
+    # Run as Deployment inside the cluster
+    # By default, a new namespace is created with name <project-name>-system,
+    # and will be used for deployment. Tun the following to deploy the operator.
+    # This will also instann the RBAC manifests from `config/rbac`.
+    $ make deploy
+    ```
+
+6. Create a sample custom resource (CR)
+
+   Update the sample VisitorsApp CR manifest at `config/samples/app_v1_visitorsapp.yaml`
+   and define the `spec` as the following:
+
+   ```yaml
+    apiVersion: app.example.com/v1
+    kind: VisitorsApp
+    metadata:
+      name: visitorsapp-sample
+    spec:
+      title: Visitors Website
+      namespace: visitorsapp-operator-system
+      size: 2
+      db_name: visitors_demo
+      db_user: visitors_demo
+      db_pass: visitors_demo
+      db_service: mysql-service
+   ```
+
+   Create the CR:
+
+   ```shell
+    kubectl apply -f config/samples/app_v1_visitorsapp.yaml
+   ```
+
+7. Cleanup
+   Run the following to delete all deployed resources:
+
+   ```shell
+   kubectl delete -f config/samples/app_v1_visitorsapp.yaml
+   make undeploy
+   ```
