@@ -22,3 +22,7 @@ func swap(x *int, y *int){
     *y = *x;
     *x = temp;
 }
+
+func swapUpgrade(x *int, y *int){
+    *x,*y = *y,*x
+}
