@@ -94,7 +94,7 @@ A function is an independent section of code that maps zero or more input
 parameters to zero or more output parameters.
 
 ```go
-# By using an ellipsis(...)  before the type name, which indicats that it takes
+# By using an ellipsis(...)  before the type name, which indicates that it takes
 # zero or more of those parameters.
 
 func add(args ...int) int{
@@ -105,3 +105,10 @@ func add(args ...int) int{
     return total
 }
 ```
+
+## Source Code
+
+* [FahrenheitCelsius.go](./FahrenheitCelsius.go)
+* [FizzBuzz.go](./FizzBuzz.go)
+* [SmallestNum.go](./SmallestNum.go)
+* [Swap.go](./Swap.go)
