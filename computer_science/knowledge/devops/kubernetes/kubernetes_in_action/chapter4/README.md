@@ -115,3 +115,57 @@ a key, an operator, and possibly a list of values.
 * Exists - Pod must include a label with the specific key.(The value isn't
   important)
 * DoesNotExist - Pod must not include a label with the specified key.
+
+## DaemonSets
+
+DaemonSets are used to include infrastructure-related pods that perform
+system-level operations. A DaemonSet makes sure it create as many pods as there
+are nodes and deploys each one on its own node.
+
+Nodes can be made unschedulable, preventing pods from being deployed to them. A
+DaemonSet will deploy pods even to such nodes, because the unschedulable
+attribute is only used by the Scheduler, whereas pods managed by a DaemonSet
+bypass the Scheduler completely.
+
+## Job
+
+Kubernetes includes support for running a task that terminates after completing
+its work through the Job resource, which allows you to run a pod whose container
+isn't restarted when the process running inside finishes successfully.
+
+Jobs may be configured to create more than one pod instance and run them in
+parallel or sequentially. This is done by setting the `completions` and the
+`parallelism` properties in the Job spec.
+
+```yaml
+spec:
+  completions: 5
+  parallelism: 2
+```
+
+You can even change a Job's `parallelism` property while the Job is running. A
+pod's time can be limited by setting the activeDeadlineSeconds property in the
+pod spce. If the pod runs longer than that, the system will try to terminate it
+and will mark the Job as failed.
+
+You can configure how many times a Job can be retried before it is marked as
+failed by specifying the `spec.backoffLimit` field in the Job manifest. If you
+don't specify it, it defaults to 6.
+
+### CronJob
+
+A cron job in Kubernetes is configured by creating a CronJob resource. At the
+configured time, Kubernetes will create a Job resource according to the Job
+template configured in the CronJob object.
+
+A CronJob creates Job resources from the jobTemplate property configured in the
+CronJob spec.
+
+## Manifest
+
+* [kubia-liveness-probe.yaml](./kubia-liveness-probe.yaml)
+* [kubia-replicaset.yaml](./kubia-replicaset.yaml)
+* [exporter.yaml](./exporter.yaml)
+* [kubia-rc.yam](./kubia-rc.yaml)
+* [ssd-monitor-daemonset.yaml](./ssd-monitor-daemonset.yaml)
+* [cronjob.yaml](./cronjob.yaml)

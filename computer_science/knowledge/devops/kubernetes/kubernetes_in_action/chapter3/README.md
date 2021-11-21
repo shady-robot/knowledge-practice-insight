@@ -73,6 +73,9 @@ $ kubectl get pod -L creation_method,env
 # modify labels of existing pods
 $ kubectl label pod kubia-manual-v2 env=debug --overwrite
 
+# delete labels of existing pods
+$ kubectl label pod kubia-manual-v2 env-
+
 $ kubectl get pod  -l creation_method=manual
 # List all pods that include the env label, whatever its value is.
 $ kubectl get pod  -l env
