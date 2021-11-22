@@ -103,6 +103,53 @@ the server listening at that location.
 * Creating an Ingress resources. It operates at the HTTP level and can thus
   offer more features than layer 4 services can.
 
+#### NodePort
+
+Service can be accessed not only through the service's internal cluster IP, but
+also through any node's IP and the reserved node port.
+
+```yaml
+spec:
+    type: NodePort
+    ports:
+    - port: 80
+      targetPort: 8080
+      nodePort: 30123
+    selector:
+        app: kubia
+```
+
+* port: This is the port of the service's internal cluster IP.
+* targetPort: This is the target port of the backing pods.
+* nodePort: This service will be accessible through port 30123 of each of your
+  cluster nodes.
+
+#### Load balancer
+
+Kubernetes clusters running on cloud providers usually support the automatic
+provision of a load balancer from the cloud infrastructure. A LoadBalancer type
+service is a NodePort service with an additional infrastructure-provided load
+balancer.
+
+#### Ingress resources
+
+Ingress: The act of going in or entering, the right to enter, a means or place
+of entering.
+
+Ingress only requires one public IP address, even when providing access to
+dozens of services. When a client sends an HTTP request to the Ingress, the host
+and path in the request determine which service the request is forwarded to.
+Ingresses operate at the application layer of the network stack(HTTP) and can
+provide features such as cookies-based session affinity and the like, which
+services can't.
+
+The client first performed a DNS lookup of `kubia.example.com`, and the DNS
+server return the IP of the Ingress controller. The client then sent an HTTP
+request to the Ingress controller and specified `kubia.example.com` in the Host
+header. From that header, the controller determined which service the client is
+trying to access, lookup up the pod IPs through the Endpoints object associated
+with the service, and forwarded the client's request to one of the pods.
+
 ## Manifests
 
 * [kubia-service.yaml](./kubia-service.yaml)
