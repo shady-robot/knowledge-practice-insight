@@ -150,6 +150,55 @@ header. From that header, the controller determined which service the client is
 trying to access, lookup up the pod IPs through the Endpoints object associated
 with the service, and forwarded the client's request to one of the pods.
 
+When a client opens a TLS connection to an Ingress controller, the controller
+terminates the TLS connection. The communication between the client and the
+controller is encrypted, whereas the communication between the controller and
+the backend pod isn't. The application running in the pod doesn't need to
+support TLS.
+
+To enable TLS, you need to attach a certificate and a private key to the
+Ingress. The two need to be stored in a Kubernetes resource called a Secrets,
+which is then referenced in the Ingress manifest.
+
+```yaml
+spec:
+  tls:
+  - hosts:
+    - kubia.example.com
+    secretName: tls-secret
+```
+
+## Readiness probes
+
+The readiness probe is invoked periodically and determines whether the specific
+pod should receive client requests or not. When a container's readiness probe
+returns success, it's signaling that the container is ready to accept requests.
+
+When a container is started, Kubernetes can be configured to wait for a
+configurable amount of time to pass before performing the first readiness check.
+After that, it invoke the probe periodically and acts based on the result of the
+readiness probe. If a pod report that it's not ready, it's removed from the
+service. If the pod then becomes ready again, it's re-added. A readiness probe
+makes sure clients only talk to those healthy pods and never notice there's
+anything wrong with the system.
+
+In the real world, the readiness probe should return success or failure
+depending on whether the app can receive client requests or not. Manually
+removing pods from service should be performed by either deleting the pod or
+changing the pod's labels instead of manually flipping a switch in the probe.
+
+You should always define a readiness probe
+
+## Headless service
+
+For a client to connect to all pods, it needs to figure out the IP of each
+individual pod. If you tell Kubernetes you don't need a cluster IP for your
+service(You do this by setting the clusterIP field to None in the service
+specification), the DNS server will return the pod IPs instead of the single
+service IP. Instead of returning a single DNS a record, the DNS server will
+return multiple A records for the service, each pointing to the IP of an
+individual pod backing the service at that moment.
+
 ## Manifests
 
 * [kubia-service.yaml](./kubia-service.yaml)
