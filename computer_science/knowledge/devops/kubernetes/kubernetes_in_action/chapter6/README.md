@@ -102,3 +102,57 @@ volumes:
     server: 1.2.3.4
     path: /some/path
 ```
+
+## Decoupling pods from the underlying storage technology
+
+When a developer needs a certain amount of persistent storage for their
+application, they can request it from Kubernetes, the same way they can request
+CPU, meamory, and other resources when creating a pod. The system administrator
+can configure the cluster so it can give the apps what they request.
+
+![Persistem Volumes](./images/persistentVolume.png)
+
+When creating the PersistentVolume, the admin specifies its size and the access
+modes it supports. PersistentVolumes don't belong to any namespace, they're
+cluster-level resources like nodes.
+
+Volume Access Mode:
+
+* RWO - ReadWriteOnce - Only a single node can mount the volume for reading and
+  writing.
+* ROX - ReadOnlyMany - Multiple nodes can mount the volume for reading.
+* RWX - ReadWriteMany - Multiple nodes can mount the volume for both reading
+  and writing.
+
+The STATUS columns shows the PersistentVolume as Released, not Available.
+
+The Volume Recycle Policy:
+
+* Retain: The Retain reclaim policy allows for manual reclamation of the
+  resource.
+* Recycle: delete the volume's contents and makes the volume available to be
+  claimed again. This way, the PersistentVolume can be reused multiple times by
+  different PersistentVolumeClaim and different pods.
+* Delete: delete the underlying storage.
+
+## Dynamic provisioning of PersistentVolumes
+
+The cluster admin, instead of creating PersistentVolumes, can deploy a
+PersistentVolume provisioner and define one or more StorageClass objects to let
+users choose what type of PersistentVolume they want. The users can refer to the
+StorageClass in their PersistentVolumeClaims and the provisioner will take that
+into account when provisioning the persistent storage.
+
+The StorageClass resource specifies which provisioner should be used for
+provisioning the PersistentVolume when a PersistentVolumeClaim requests this
+StorageClass. The parameters defined in the StorageClass definition are passed
+to the provisioner and are specific to each provisioner plugin.
+
+The cluster admin can create multiple storage classes with different performance
+or other characteristics. The developer then decides which one is most
+appropriate for each claim they create.
+
+Explicitly set storageClassName to "" if you want the PVC to use a
+pre-provisioned PersistentVolume.
+
+![Dynamic Provision](./images/dynamic_provision.png)
