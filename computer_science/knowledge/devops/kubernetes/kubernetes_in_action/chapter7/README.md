@@ -138,3 +138,55 @@ spec:
 
 The `subPath` property can be used when mounting any kind of volume. Instead of
 mounting the whole volume, you can mount part of it.
+
+## Secrets
+
+To store and distribute sensitive information, Kubernetes provides a separate
+object called a Secret.
+
+* Pass Secret entries to the container as environment variables.
+* Expose Secret entries as files in a volume.
+
+Kubernetes helps keep your Secret safe by making sure each Secret is onl
+distributed to the nodes that run the pods that need access to the Secret. Also,
+on the nodes, Secrets are always stored in memory and never written to physical
+storage.
+
+The contents of a Secret's entries are shown as Base64-encoded strings, whereas
+those of a ConfigMap are shown in clear text.
+
+When you expose the Secret to a container through a secret volume, the value of
+the Secret entry is decoded and written to the file in its actual form.
+
+```yaml
+env:
+- name: FOO_SECRET
+  valueFrom:
+    secretKeyRef:
+      name: fortune-https
+      key: foo
+```
+
+Even though Kubernetes enables you to expose Secrets through environment
+variable, it may not be the best idea to use this feature. Applications usually
+dump environment variable in error reports or even write them to the application
+log at startup, which may unintentionally expose them.
+
+To be safe, always use secret volumes for exposing Secrets.
+
+### Image pull secrets
+
+To have Kubernetes use the Secret when pulling images from your private Docker
+Hub Repository. all you need to do is specify the Secret's name in the pod spec.
+You can add Secrets to a ServiceAccount to avoid adding secrets to every pod.
+
+```shell
+kubectl create secret docker-registry regcred --docker-server=<your-registry-server> --docker-username=<your-name> --docker-password=<your-pword> --docker-email=<your-email>
+```
+
+```yaml
+kind: Pod
+spec:
+  imagePullSecrets:
+  - name: regcred
+```
