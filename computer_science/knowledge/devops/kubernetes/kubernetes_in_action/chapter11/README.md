@@ -100,6 +100,28 @@ perform whatever task it needs in response to a change of the cluster metadata.
 kubectl get pods -o yaml --watch
 ```
 
+## Scheduler
+
+Wait for newly created pods through the API server's watch mechanism and assign
+a node to each new pod that doesn't already have the node set.
+
+The Scheduler doesn't instruct the selected node to run the pod. All the
+Scheduler does it update the pod definition through the API server. The API
+server then notifies the Kubelet that the pod has bas been scheduled. As soon as
+the Kubelet on the target node sees the pod has been scheduled to its node, it
+creates and runs the pod's containers.
+
+* Filtering the list of all nodes to obtain a list of acceptable nodes the pod
+  can be scheduled to.
+* Prioritizing the acceptable nodes and choosing the best one. If multiple nodes
+  have the highest score, round-robin is used to ensure pods are deployed across
+  all of them evenly.
+
+The Scheduler can either be configured to suit your specific needs or
+infrastructure specifics, or it can even be replaced with a custom
+implementation altogether. You could also run a Kubernetes cluster without a
+Scheduler, but then you'd have to perform the scheduling manually.
+
 ## References
 
 * [etcd v3 encoded values](https://stackoverflow.com/questions/45744534/etcd-v3-cant-read-encoded-values)
