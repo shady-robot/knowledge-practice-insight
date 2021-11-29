@@ -222,14 +222,39 @@ are like any other Kubernetes resource. `kubectl get events --watch`
 The pause container is the container that holds all the containers of a pod
 together. The pause container is an infrastructure container whose sole purpose
 is to hold all these namespaces. All other user-defined containers of the pod
-then use the namespaces of the pod infrastructure container.
+then use the namespaces of the pod infrastructure container. The infrastructure
+container's lifecycle is tied to the pod - the container runs from the time the
+pod is scheduled until the pod is deleted.
 
 ## Inter-pod networking
 
 You know that each pod gets its own unique IP address and can communicate with
 all other pods through a flat, NAT-less network. The network is set up by the
 system administrator or by a Container Network Interface(CNI) plugin, not by
-Kubernetes itself.
+Kubernetes itself. Kubernetes doesn't require you to use a specific networking
+technology, but it does mandate that the pods can communicate with each other,
+regardless if they're running on the same worker node or not.
+
+Using Software Defined Network(SDN), which makes the nodes appear as though
+they're connected to the same network switch, regardless of the actual
+underlying network topology, no matter how complex it is. Packets sent from the
+pod are encapsulated and sent over the network to the node running the other
+pod, where they are de-encapsulated and delivered to the pod in their original
+form.
+
+## The Container Network Interface(CNI)
+
+The CNI allows Kubernetes to be configured to use any CNI plugin that's out
+there. Installing a network plugin, normally in the form of DaemonSet, which
+ties into the CNI interface on the node.
+
+### How services are implemented
+
+Everything related to Service is handled by the `Kube-proxy` process running on
+each node. Service gets its own stable IP address and port. The IP address is
+virtual - it's not assigned to any network interfaces and is never listed as
+either the source or the destination IP address in a network when the packet
+leaves the node.
 
 ## References
 
