@@ -122,6 +122,77 @@ infrastructure specifics, or it can even be replaced with a custom
 implementation altogether. You could also run a Kubernetes cluster without a
 Scheduler, but then you'd have to perform the scheduling manually.
 
+## Controller manager
+
+* The API server doesn't do anything except store resources in etcd and notify
+  clients about the change.
+* The Scheduler only assigns a node to the pod.
+* The Controller Manager make sure the actual state of the system converges
+  toward the desired state.
+
+The single Controller Manager process currently combines a multitude of
+controllers performing various reconciliation tasks. Eventually, those
+controllers will be split up into separate processes, enabling you to replace
+each one with a custom implementation if necessary.
+
+Resources are descriptions of what should be running in the cluster, whereas the
+controllers are the active Kubernetes components that perform actual work as a
+result of the deployed resources.
+
+### What controllers do
+
+Controllers do many different things, but they all watch the API server for
+changes to resources and perform operations for each change, whether it's a
+creation of a new object or an update or deletion of an existing object. In
+general, controllers run a reconciliation loop, which reconciles the actual
+state with the desired state, and writes the new actual state to the resource's
+status section. Each controller connects to the API server and, through the
+watch mechanism, asks to be notified when a change occurs in the list of
+resources of any type the controller is responsible for.
+
+### The Replication manager
+
+Replication manager creates new Pod manifests, posts them to the API server, and
+lets the Scheduler and the Kubelet do their job of scheduling and running the
+pod. The REplication Manager performs its work by manipulating Pod API objects
+through the API server.
+
+All these controllers operate on the API objects through the API server. They
+don't communicate with the Kubelet directly or issue any kind of instruction to
+them. After a controller updates a resource in the API server, the Kubelet and
+Kubernetes Service Proxies, also oblivious of the controller's existence,
+perform their work, such as spinning up a pod's containers and attaching network
+storage to them, or in the case of services, setting up the actual load
+balancing across pods.
+
+## Kubelet
+
+Kubelet is the component responsible for everything running on a worker node.
+Its initial job is to register the node it's running on by creating a Node
+resources in the API server. Then it need to continuously monitor the API server
+for Pods that have been scheduled to the node, and start the pod's containers.
+It does this by telling the configured container runtime to run a container from
+a specific container image. The Kubelet then constantly monitors running
+containers and reports their status, events, and resource consumption to the
+API server.
+
+## Kubernetes service proxy
+
+The purpose of `kube-proxy` is to make sure clients can connect to the services
+you define through the Kubernetes API. The `kube-proxy` makes sure connections
+to the service IP and port end up at one of the pods backing that service. When
+a service is backed by more than one pod, the proxy performs load balancing
+across those pods.
+
+kube-proxy can run in three different modes:
+
+* iptables(default mode)
+* ipvs
+* userspace("legacy" mode, not recommended anymore)
+
+Each time a service is created/deleted or the endpoints are modified, kube-proxy
+is responsible for updating the iptables rules on each node of the cluster.
+
 ## References
 
 * [etcd v3 encoded values](https://stackoverflow.com/questions/45744534/etcd-v3-cant-read-encoded-values)
