@@ -193,6 +193,44 @@ kube-proxy can run in three different modes:
 Each time a service is created/deleted or the endpoints are modified, kube-proxy
 is responsible for updating the iptables rules on each node of the cluster.
 
+## Kubernetes add-ons
+
+Add-on components are deployed as pods by submitting YAML manifests to the API
+server. Some of theses components are deployed through a Deployment resource or
+a ReplicationControl resource, and some through a DaemonSet.
+
+### DNS server
+
+All the pods in the cluster are configured to use the cluster's internal DNS
+server by default. This allows pods to easily look up services by name or even
+the pod's IP addresses in the case of headless services.
+
+### The event chain inside
+
+Even before you start the whole process, the controllers, the Scheduler, and the
+Kubelet are watching the API server for changes to their respective resources
+types.
+
+![Deployment Event Chain](./images/kubernetes-event.png)
+
+Both the Control Plane components and the Kubelet emit events to the API server
+as them perform these actions. They do this by creating Event resources, which
+are like any other Kubernetes resource. `kubectl get events --watch`
+
+### The pause container
+
+The pause container is the container that holds all the containers of a pod
+together. The pause container is an infrastructure container whose sole purpose
+is to hold all these namespaces. All other user-defined containers of the pod
+then use the namespaces of the pod infrastructure container.
+
+## Inter-pod networking
+
+You know that each pod gets its own unique IP address and can communicate with
+all other pods through a flat, NAT-less network. The network is set up by the
+system administrator or by a Container Network Interface(CNI) plugin, not by
+Kubernetes itself.
+
 ## References
 
 * [etcd v3 encoded values](https://stackoverflow.com/questions/45744534/etcd-v3-cant-read-encoded-values)
