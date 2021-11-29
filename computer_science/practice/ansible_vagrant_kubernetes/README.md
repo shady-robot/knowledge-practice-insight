@@ -63,6 +63,8 @@ Refer to [Configuring a cgroup driver](https://kubernetes.io/docs/tasks/administ
 
 Refer to [configure docker using systemd](https://stackoverflow.com/questions/52119985/kubeadm-init-shows-kubelet-isnt-running-or-healthy)
 
+![Kubernetes Cluster](./images/k8s_cluster.png)
+
 ## References
 
 * [Kubernetes Setup](https://kubernetes.io/blog/2019/03/15/kubernetes-setup-using-ansible-and-vagrant/)
