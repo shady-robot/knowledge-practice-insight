@@ -130,3 +130,12 @@ rules:
   - get
 ```
 
+![Kubernetes RBAC](./images/kubernetes_rbac.png)
+
+Complete control of the Kubernetes cluster can be given by assigning the
+cluster-admin ClusterRole to a subject.
+
+## Granting authorization permissions wisely
+
+It is good idea to create a specific ServiceAccount for each pod and then
+associate it with a tailor-made Role through a RoleBinding.
