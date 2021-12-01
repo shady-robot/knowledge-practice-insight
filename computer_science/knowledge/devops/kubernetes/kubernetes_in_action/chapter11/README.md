@@ -256,6 +256,11 @@ virtual - it's not assigned to any network interfaces and is never listed as
 either the source or the destination IP address in a network when the packet
 leaves the node.
 
+## High availability
+
+Kubernetes High-Availability is about setting up Kubernetes, along with its
+supporting components in a way that there is no single point of failure.
+
 ## References
 
 * [etcd v3 encoded values](https://stackoverflow.com/questions/45744534/etcd-v3-cant-read-encoded-values)
