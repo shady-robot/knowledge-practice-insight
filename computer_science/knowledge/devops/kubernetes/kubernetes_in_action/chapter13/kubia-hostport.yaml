@@ -11,3 +11,5 @@ spec:
     - containerPort: 8080
       hostPort: 9000
       protocol: TCP
+    securityContext:
+      privileged: true

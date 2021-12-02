@@ -63,3 +63,44 @@ pod's container runs in privileged mode.
 * `securityContext.capabilities.drop`: you can drop some capabilities.
 * `securityContext.readOnlyRootFilesystem`: Prevent the container from writing
   to its filesystem, but not the mounted volumes.
+
+Sharing volumes when containers run as different users.
+Kubernetes allows you to specify supplemental groups for all the pods running in
+the container, allowing them to share files, regardless of the user IDs they're
+running as.
+
+## Restricting the use of security-related features in pods
+
+The cluster admin can restrict the use of security-related features by creating
+one or more PodSecurityPolicy resources. PodSecurityPolicy is a cluster-level
+resources, which defines what secturoty-related features users can or can't use
+in their pods. The job of uploading the policies configured in PodSecurityPolicy
+resources is performed by the PodSecurityPolicy admission control plugin running
+in the API server.
+
+When someone posts a pod resources to the API server, the PodSecurityPolicy
+admission control plugin validates the pod definition against the configured
+PodSecurityPolicies.
+
+```yaml
+apiVersion: extensions/v1beta1
+kind: PodSecurityPolicy
+spec:
+  allowedCapabilities:
+  - SYS_TIME
+  defaultAddCapabilities:
+  - CHOWN
+  requiredDropCapabilities:
+  - SYS_ADMIN
+  - SYS_MODULE
+```
+
+The `SYS_ADMIN` capability allows a range of administrative operations, and the
+`SYS_MODULE` capability allows loading and uploading Linux kernel modules.
+
+## Isolating the pod network
+
+A NetworkPolicy applies to pods that match its label selector and specifies
+either which sources can access the matched pods or which destinations can be
+accessed from the matched pods. This is configured through ingress and egress
+rules, respectively.
