@@ -122,6 +122,145 @@ infrastructure specifics, or it can even be replaced with a custom
 implementation altogether. You could also run a Kubernetes cluster without a
 Scheduler, but then you'd have to perform the scheduling manually.
 
+## Controller manager
+
+* The API server doesn't do anything except store resources in etcd and notify
+  clients about the change.
+* The Scheduler only assigns a node to the pod.
+* The Controller Manager make sure the actual state of the system converges
+  toward the desired state.
+
+The single Controller Manager process currently combines a multitude of
+controllers performing various reconciliation tasks. Eventually, those
+controllers will be split up into separate processes, enabling you to replace
+each one with a custom implementation if necessary.
+
+Resources are descriptions of what should be running in the cluster, whereas the
+controllers are the active Kubernetes components that perform actual work as a
+result of the deployed resources.
+
+### What controllers do
+
+Controllers do many different things, but they all watch the API server for
+changes to resources and perform operations for each change, whether it's a
+creation of a new object or an update or deletion of an existing object. In
+general, controllers run a reconciliation loop, which reconciles the actual
+state with the desired state, and writes the new actual state to the resource's
+status section. Each controller connects to the API server and, through the
+watch mechanism, asks to be notified when a change occurs in the list of
+resources of any type the controller is responsible for.
+
+### The Replication manager
+
+Replication manager creates new Pod manifests, posts them to the API server, and
+lets the Scheduler and the Kubelet do their job of scheduling and running the
+pod. The REplication Manager performs its work by manipulating Pod API objects
+through the API server.
+
+All these controllers operate on the API objects through the API server. They
+don't communicate with the Kubelet directly or issue any kind of instruction to
+them. After a controller updates a resource in the API server, the Kubelet and
+Kubernetes Service Proxies, also oblivious of the controller's existence,
+perform their work, such as spinning up a pod's containers and attaching network
+storage to them, or in the case of services, setting up the actual load
+balancing across pods.
+
+## Kubelet
+
+Kubelet is the component responsible for everything running on a worker node.
+Its initial job is to register the node it's running on by creating a Node
+resources in the API server. Then it need to continuously monitor the API server
+for Pods that have been scheduled to the node, and start the pod's containers.
+It does this by telling the configured container runtime to run a container from
+a specific container image. The Kubelet then constantly monitors running
+containers and reports their status, events, and resource consumption to the
+API server.
+
+## Kubernetes service proxy
+
+The purpose of `kube-proxy` is to make sure clients can connect to the services
+you define through the Kubernetes API. The `kube-proxy` makes sure connections
+to the service IP and port end up at one of the pods backing that service. When
+a service is backed by more than one pod, the proxy performs load balancing
+across those pods.
+
+kube-proxy can run in three different modes:
+
+* iptables(default mode)
+* ipvs
+* userspace("legacy" mode, not recommended anymore)
+
+Each time a service is created/deleted or the endpoints are modified, kube-proxy
+is responsible for updating the iptables rules on each node of the cluster.
+
+## Kubernetes add-ons
+
+Add-on components are deployed as pods by submitting YAML manifests to the API
+server. Some of theses components are deployed through a Deployment resource or
+a ReplicationControl resource, and some through a DaemonSet.
+
+### DNS server
+
+All the pods in the cluster are configured to use the cluster's internal DNS
+server by default. This allows pods to easily look up services by name or even
+the pod's IP addresses in the case of headless services.
+
+### The event chain inside
+
+Even before you start the whole process, the controllers, the Scheduler, and the
+Kubelet are watching the API server for changes to their respective resources
+types.
+
+![Deployment Event Chain](./images/kubernetes-event.png)
+
+Both the Control Plane components and the Kubelet emit events to the API server
+as them perform these actions. They do this by creating Event resources, which
+are like any other Kubernetes resource. `kubectl get events --watch`
+
+### The pause container
+
+The pause container is the container that holds all the containers of a pod
+together. The pause container is an infrastructure container whose sole purpose
+is to hold all these namespaces. All other user-defined containers of the pod
+then use the namespaces of the pod infrastructure container. The infrastructure
+container's lifecycle is tied to the pod - the container runs from the time the
+pod is scheduled until the pod is deleted.
+
+## Inter-pod networking
+
+You know that each pod gets its own unique IP address and can communicate with
+all other pods through a flat, NAT-less network. The network is set up by the
+system administrator or by a Container Network Interface(CNI) plugin, not by
+Kubernetes itself. Kubernetes doesn't require you to use a specific networking
+technology, but it does mandate that the pods can communicate with each other,
+regardless if they're running on the same worker node or not.
+
+Using Software Defined Network(SDN), which makes the nodes appear as though
+they're connected to the same network switch, regardless of the actual
+underlying network topology, no matter how complex it is. Packets sent from the
+pod are encapsulated and sent over the network to the node running the other
+pod, where they are de-encapsulated and delivered to the pod in their original
+form.
+
+## The Container Network Interface(CNI)
+
+The CNI allows Kubernetes to be configured to use any CNI plugin that's out
+there. Installing a network plugin, normally in the form of DaemonSet, which
+ties into the CNI interface on the node.
+
+### How services are implemented
+
+Everything related to Service is handled by the `Kube-proxy` process running on
+each node. Service gets its own stable IP address and port. The IP address is
+virtual - it's not assigned to any network interfaces and is never listed as
+either the source or the destination IP address in a network when the packet
+leaves the node.
+
+## High availability
+
+Kubernetes High-Availability is about setting up Kubernetes, along with its
+supporting components in a way that there is no single point of failure.
+
 ## References
 
 * [etcd v3 encoded values](https://stackoverflow.com/questions/45744534/etcd-v3-cant-read-encoded-values)
