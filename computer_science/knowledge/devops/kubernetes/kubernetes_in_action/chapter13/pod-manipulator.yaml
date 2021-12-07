@@ -1,0 +1,12 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  # Rioles are namespaced(if namespace is omitted, the current namespace is used)
+  namespace: default
+  name: pod-manipulator
+rules:
+  # Services are resource in the core apiGroup, which has no name - hence the ""
+  - apiGroups: [""]
+  # Getting individual Services(by name and listing all of them is allowed.
+    verbs: ["get", "list", "create", "delete"]
+    resources: ["pod"]
