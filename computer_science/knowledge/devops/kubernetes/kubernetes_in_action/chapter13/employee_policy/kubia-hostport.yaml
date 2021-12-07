@@ -1,0 +1,26 @@
+# this is
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubia
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kubia
+  template:
+    metadata:
+      name: kubia
+      labels:
+        app: kubia
+    spec:
+      containers:
+      - image: luksa/kubia
+        name: kubia
+        ports:
+        - containerPort: 8080
+          hostPort: 13001
+          protocol: TCP
+        securityContext:
+          privileged: false
