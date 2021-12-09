@@ -104,3 +104,41 @@ limit by reading the following files:
 
 Kubernetes determine pod's priority by categorizing pods into three Quality of
 Service (QoS) classes.
+
+* BestEffort(The lowest priority)
+* Burstable
+* Guaranteed(The highest)
+
+### BestEffort classes
+
+The lowest priority QoS class is the BestEffort class. It's assigned to pods
+that don't have any requests or limits set at all. Containers running in these
+these pods have had no resource guarantees whatsoever.
+
+### Guaranteed classes
+
+This class is given to pods whose containers' requests are equal to the limits
+for all resources.
+
+* Requests and limits need to be set for both CPU and memory
+* They need to be set for each container
+* They need to be equal(the limit needs to match the request for each resource
+  in each container)
+
+### Burstable classes
+
+In between BestEffort and Guaranteed is the Burstable QoS class. All other pods
+fall into this class.
+
+![Kubernetes QoS](./images/kubernetes_QoS.png)
+
+When the system is overcommitted, the QoS classes determine which container gets
+killed first so the freed resources can be given to higher priority pods.
+
+Each running process has an OutOFMemory(OOM) score. The system selects the
+process to kill by comparing OOM scores of all the running processes. When
+memory needs to be freed, the process with the highest score gets killed.
+
+OOM scores are calculated from two things: the percentage of the available
+memory the process is consuming and a fixed OOM score adjustment, which is based
+on the pod's QoS class and the container's requested memory.
