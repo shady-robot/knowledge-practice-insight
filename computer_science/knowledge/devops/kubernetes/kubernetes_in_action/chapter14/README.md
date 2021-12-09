@@ -186,3 +186,22 @@ ReplicationControllers, Services, and other objects inside a single namespace.
 This allows the cluster admin to limit the number of objects users can create
 based on their payment plan, and can limit the number of public IPs or node
 ports Service can use.
+
+Quotas can also be limited to a set of quota scopes. Four scopes are currently
+available: BestEffort, NotBestEffort, Terminating, and NotTerminating.
+
+The BestEffort and NotBestEffort scopes determine whether the quota applies to
+pods with the BestEffort QoS class or with one of the other two classes.
+
+The Terminating quota scope applies to pods that have the activeDeadlineSeconds
+set, whereas the NotTerminating applies to those that don't. When creating a
+ResourceQuota, you can specify the scopes that it applies to. A pod must match
+all the specified scopes for the quota to apply to it.
+
+## Monitoring pod resource usage
+
+The Kubelet itself already contains an agent called cAdvisor, which performs the
+basic collection of resource consumption data for both individual containers
+running on the node and the node as a whole. Gather those statistics centrally
+for the whole cluster requires you to run an additional component called
+Heaspter.
