@@ -142,3 +142,47 @@ memory needs to be freed, the process with the highest score gets killed.
 OOM scores are calculated from two things: the percentage of the available
 memory the process is consuming and a fixed OOM score adjustment, which is based
 on the pod's QoS class and the container's requested memory.
+
+## Setting default requests and limits for pods per namespace
+
+Instead of specifying `requests` and `limits` for every container, you can also
+do it by creating a LimitRange resource. It allows you to specify not only the
+minimum and maximum limit you can set on a container for each resource, but also
+the default resource requests for containers that don't specify requests
+explicitly.
+
+LimitRange resources are used by the LimitRanger Admission Control plugin. When
+a pod manifest is posted to the API server, the LimitRanger plugin validates the
+pod spec.  The limits specified in a LimitRange resource apply to each
+individual pod/container or other kind of object created in the same namespace
+as the LimitRange object. They don't limit the total amount of resources
+available across all the pods in the namespaces.
+
+If namespaces are used to separate different teams or to separate development,
+QA, staging, and production pods running in the same Kubernetes cluster, using
+a different LimitRange in each namespace ensures large pods can be created in
+certain namespaces, whereas others are constrained to smaller pods.
+
+## Limit the total resources available in a namespace
+
+The ResourceQuota Admission Control plugin checks whether the pod being created
+would cause the configured ResourceQuota to be exceeded. If that's the case, the
+pod's creation is rejected. A ResourceQuota limits the amount of computational
+resources the pods and the amount of storage PersistentVolumeClaims in a
+namespace can consume. It can also limit the number of pods, claims, and other
+API objects users are allowed to create inside the namespace.
+
+A ResourceQuota object applies to the namespace it's created in, like a
+LimitRange, but it applies to all the pod's resource requests and limits in
+total and not each individual pod or container separately.
+
+When a quota for a specific resource is configured, pods need to have the
+request or limit set for that same resource, otherwise the API server will not
+accept the pod. That's why having a LimitRange with default for those resources
+can make life a lit easier for people creating pods.
+
+A ResourceQuota can also be configured to limit the number of Pods,
+ReplicationControllers, Services, and other objects inside a single namespace.
+This allows the cluster admin to limit the number of objects users can create
+based on their payment plan, and can limit the number of public IPs or node
+ports Service can use.
