@@ -206,6 +206,30 @@ running on the node and the node as a whole. Gather those statistics centrally
 for the whole cluster requires you to run an additional component called
 Heaspter.
 
+### Resource metrics pipeline
+
+The resource metrics pipeline provides a limited set of metric related to
+cluster components such as the Horizontal Pod Autoscaler controller, as well as
+the `kubectl top` utility. These metrics are collected by the lightweight,
+short-term, in-memory metric-server and are exposed via the `metrics.k8s.io`
+API.
+
+metrics-server discovers all nodes on the cluster and queries each node's
+kubelet for CPU and memory usage. The kubelet translates each pod into its
+constituent containers and fetches individual container usage statistics from
+the container runtime through the container runtime interface.
+
+The kubelet featches this information from the integrated cAdvisor for the
+legacy Docker integration. It then exposes the aggregated pod resource usage
+statistics through the metrics-server Resource Metrics API.
+
+### Full metrics pipeline
+
+A full metrics pipeline gives you access to richer metrics. The monitor pipeline
+fetches metrics from the kubelet and then exposes them to Kubernetes via an
+adapter by implementing either the `custom.metrics.k8s.io` or
+`external.metrics.k8s.io` API.
+
 ### Enable metrics-server for kubeadm
 
 refer to [Make metrics-server work out of the box with kubeadm][1] for more
