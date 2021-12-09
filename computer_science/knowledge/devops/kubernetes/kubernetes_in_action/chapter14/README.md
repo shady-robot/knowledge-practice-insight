@@ -205,3 +205,28 @@ basic collection of resource consumption data for both individual containers
 running on the node and the node as a whole. Gather those statistics centrally
 for the whole cluster requires you to run an additional component called
 Heaspter.
+
+### Enable metrics-server for kubeadm
+
+refer to [Make metrics-server work out of the box with kubeadm][1] for more
+detail.
+
+## Summary
+
+* Specify resource requests helps Kubernetes schedule pods across the cluster.
+* Specify resource limits keeps pods from starving other pods of resources.
+* Unused CPU time is allocated based on container's CPU requests.
+* Containers never get killed if they try to use much CPU, but they are killed
+  if they try to use too much memory.
+* In an overcommitted system, containers also get killed to free memory for
+  more important pods, based on the pod's QoS classes and actual memory usage.
+* You can use LimitRange objects to define the minimum, maximum, and default
+  resource requests and limits for individual pods.
+* You can use ResourceQuota objects to limit the amount of resource available to
+  all the pods in a namespace.
+
+## Reference
+
+* [Kuberneter metrics-server](https://github.com/kubernetes-sigs/metrics-server)
+
+[1]: https://particule.io/en/blog/kubeadm-metrics-server
