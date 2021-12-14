@@ -1,0 +1,32 @@
+# OpenShift 
+
+容器引擎使容器具备了较好的可操作性和可移植性， Kubernetes 使容器具备企业级的使用的条件。
+OpenShift 以容器技术和 Kubernetes 为基础，在此之上，提供了软件定义网络、软件定义存储、
+权限管理、企业级镜像仓库、统一入口路由、持续集成流程、统一管理控制台、监控日志等功能,
+形成覆盖整个软件生命周期的解决方案。
+
+## 云原生
+
+云原生应用的四大原则如下：
+
+1. 基于容器的基础架构
+  依靠容器构建跨底层基础架构的通用运行环境，并在不同的环境和基础架构间实现真正的应用可移植性。
+2. 基于 DevOps 流程
+  使用敏捷的方法，依据持续交付的和 DevOps 原则来开发应用
+3. 基于服务的架构
+  构建松耦合的模块化服务
+4. 基于 API 的通信
+  通过轻量级 API 进行服务之间的互相调用
+
+## 容器
+
+OCI（Open Container Initiative）项目的目的是对容器运行时的接口标准化。
+为了实现 Kuberneter 与容器运行时解耦， Google 提出了 CRI（Container Runtime Interface
+） 标准。它是一组 Kubenretes 与 Container Runtime 进行交互的接口。Kuberneter
+定义的是它调用容器运行时的标准接口， OCI 定义的是容器运行时本身的标准。
+
+概念上，从 PaaS 顶层到底层的调用关系：
+Orchestration API -> Container Engine API  -> Kernel API
+
+红帽 OpenShift 调用架构:
+Kuberneters Master -> Kubelet -> CRI-O -> runC -> Linux kernel

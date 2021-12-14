@@ -1,0 +1,34 @@
+# Container Runtime
+
+A container runtime, also known as container engine, is a software component
+that can run containers on a host operating system. In a containerized
+architecture, container runtime are responsible for loading container images
+from a repository, monitoring local system resources, isolating system resources
+for use of a container, and managing container lifecycle.
+
+## Low-level container runtimes
+
+The Open Container Interface(OCI) is a Linux foundation project started by
+Docker, which aims to provide open standards for Linux containers. The OCI
+provides runtime specifications. Runtimes implemented according to OCI specs are
+called low0level runtimes, because the primary focus is on container lifecycle
+management.
+
+Native low-level runtimes are responsible for creating and running containers.
+Once the containerized process runs, the container runtime is not required to
+perform other tasks. This is because low-level runtimes abstract the Linux
+primitives and are not designed to perform additional tasks.
+
+## Kubernetes interaction
+
+Container orchestrators like Kubernetes are responsible for managing and scaling
+containerized workloads. In Kubernetes, the kubelet is an agent that runs on
+every computing node.
+
+The kubelet communicates with the container engine through the standard
+Container Runtime Interface(CRI).
+
+To deal with the increasing difficulty of incorporating multiple runtimes into
+Kubernetes, the community specified an interface - particular functions that a
+container runtime would need to put in place on behalf of Kubernetes - named the
+Container Runtime Interface(CRI)
