@@ -1,4 +1,4 @@
-# concepts
+# Prometheus concepts
 
 ## Data model
 
