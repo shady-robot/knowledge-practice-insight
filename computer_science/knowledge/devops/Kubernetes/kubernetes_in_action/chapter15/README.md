@@ -71,6 +71,42 @@ be forced to release memory. This need to be done by the app itself - it can't
 be done by the system. All the system could do is kill and restart the app,
 hoping it would use less memory than before.
 
+## Vertical pod autoscaling
+
+The Vertical Pod Autoscaler(VPA) is a Kubernetes sub-project that provides a
+vertical scaling implementation for Kubernetes controllers, such as Deployments.
+It functions by tweaking the resource request parameters of the pods that make
+up the workload, based on the analysis of metrics collected from the workloads.
+
+### VPA API resource
+
+The behavior required of VPA is declaratively defined using a custom resource
+definition(CRD) called a VerticalPodAutoscaler.
+
+## Horizontal scaling of cluster nodes
+
+The Cluster Autoscaler takes care of automatically provisioning additional nodes
+when it notices a pod that can't be scheduled to existing nodes because of lack
+of resources on those nodes. It also de-provisions nodes when they're
+underutilized for longer period of time.
+
+```console
+gcloud container clusters update kubia --enable-autoscaling --min-nodes=3 --max-nodes=5
+```
+
+### Limiting service disruption during cluster scale-down
+
+Certain services require that a minimum number of pods always keeps running,
+this is especially true for quorum-based clustered applications. Kubernetes
+provides a way of specifying the minimum number of pods that need to keep
+running while performing there types of operations. This is done by creating a
+PodDisruptionBudget resource.
+
+```shell
+kubectl create pdb kubia-pdb --selector=app-kubia --min-available=3
+```
+
 ## References
 
 * [HorizontalPodAutoscaler Walkthrough](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/)
+* [Kubernetes autoscaler](https://github.com/kubernetes/autoscaler/)
