@@ -81,3 +81,12 @@ The rate of request that fail, either explicitly, implicitly, or by policy.
 
 How "full" your service is. A measure of your system fraction, emphasizing the
 resources that are most constrained.
+
+## As simple as possible
+
+* The rules that catch real incidents most often should be as simple,
+  predictable as possible.
+* Data collection, aggregation, and alerting configuration that is rarely
+  exercised should be up for removal.
+* Signals that are collected, but not exposed in any prebaked dashboard nor used
+  by any alert, are candidates for removal.
