@@ -110,7 +110,7 @@ The `SelectorSpreadPriority` function, which make sure pods belonging to the
 same ReplicaSet or Service are spread around different nodes so a node failure
 won't bring the whole service down.
 
-## Pod affinity and anti-affinity
+## Pod affinity
 
 By specifying the affinity between pods themselves, you can co-locate pods
 together, which, reducing latency and improving the performance.
@@ -144,3 +144,41 @@ spec:
             matchLabels:
               app: backend
 ```
+
+## Pod anti-affinity
+
+Using pod anti-affinity to keep pods away from each other. It's specified the
+same way as pod affinity, except that you use the podAntiAffinity property
+instead of podAffinity, which results in the Scheduler never choosing nodes
+where pods matching the podAffinity's label selector are running.
+
+### Using anti-affinity to spread apart pods of the same deployment
+
+```yaml
+spec:
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - topologyKey: kubernetes.io/hostname
+        labelSelector:
+          machLabels:
+            app: frontend
+```
+
+## Summary
+
+* If you add a taint to a node, pods won't be scheduled to that node unless they
+  tolerate that taint.
+* Three types of taints exist: NoSchedule completely prevents scheduling,
+  PreferNoScheduler isn't as strict, and NoExecute even evicts existing pods
+  from a node.
+* Node affinity allows you to specify which nodes a pod should be scheduled to.
+  It can be used to specify a hard requirement or to only express a node
+  preference.
+* Pod affinity is used to make the Scheduler deploy pods to the same node where
+  another pod is running.(based on the pod's labels)
+* Pod affinity's topologyKey specifies how close the pod should be deployed to
+  the other pod.
+* Pod anti-affinity can be used to keep certain pods away from each other.
+* Both pod affinity and anti-affinity, like node affinity, can either specify
+  hard requirements or preferences.
