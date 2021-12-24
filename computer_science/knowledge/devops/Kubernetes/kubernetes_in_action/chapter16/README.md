@@ -109,3 +109,38 @@ that include the `gpu=true` label.
 The `SelectorSpreadPriority` function, which make sure pods belonging to the
 same ReplicaSet or Service are spread around different nodes so a node failure
 won't bring the whole service down.
+
+## Pod affinity and anti-affinity
+
+By specifying the affinity between pods themselves, you can co-locate pods
+together, which, reducing latency and improving the performance.
+
+```yaml
+spec:
+  affinity:
+    podAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - topologyKey: kubernetes.io/hostname
+        labelSelector:
+          matchLabels:
+            app: backend
+```
+
+### Expressing pod affinity preference instead of hard requirements
+
+You can tell the Scheduler you'd prefer to have your frontend pods scheduled
+onto the same node as your backend pod, but if that's not possible, you're okay
+with them being scheduled elsewhere.
+
+```yaml
+spec:
+  affinity:
+    podAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 80
+        podAffinityTerm:
+          topologyKey: kubernetes.io/hostname
+          labelSelector:
+            matchLabels:
+              app: backend
+```
