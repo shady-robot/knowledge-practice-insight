@@ -72,8 +72,40 @@ A mechanism called node affinity, which allows you to tell Kubernetes to
 schedule pods only to specific subsets of nodes.
 
 By specifying a preference, you tell Kubernetes which nodes you prefer for a
-specific pod, and Kubernetes will
+specific pod, and Kubernetes will try to schedule the pod to one of these nodes.
+If not possible, it will choose one of the other nodes.
 
 Taints can be used to prevent scheduling of new pods(NoSchedule effect) and to
-define unpreferred node(PreferNoSchedule effect) and even evit existing pods
+define unpreferred node(PreferNoSchedule effect) and even evicted existing pods
 from a node(NoExecute).
+
+### Specifying hard node affinity rules
+
+```yaml
+spec:
+  nodeSelector:
+    gpu: "true"
+
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoreDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: gpu
+            operator: In
+            values:
+            - "true"
+```
+
+The nodeSelector field specifies that the pod should only be deployed on nodes
+that include the `gpu=true` label.
+
+* `requiredDuringScheduling` means the rules defines under this field specify
+  the labels the node must have for the pod to be scheduled to the node.
+* `IgnoredDuringExecution` means the rules defined under the field don't affect
+  pods already executing on the node.
+
+The `SelectorSpreadPriority` function, which make sure pods belonging to the
+same ReplicaSet or Service are spread around different nodes so a node failure
+won't bring the whole service down.

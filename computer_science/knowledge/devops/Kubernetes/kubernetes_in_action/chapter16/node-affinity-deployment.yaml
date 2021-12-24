@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kubia
+spec:
+  selector:
+    matchLabels:
+      app: kubia
+  replicas: 3
+  template:
+    metadata:
+      name: kubia
+      labels:
+        app: kubia
+    spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 80
+            preference:
+              matchExpressions:
+              - key: availability-zone
+                operator: In
+                values:
+                - zone1
+          - weight: 20
+            preference:
+              matchExpressions:
+              - key: shared-type
+                operator: In
+                values:
+                - dedicated
+      containers:
+      - image: luksa/kubia:v1
+        name: nodejs
+        resources:
+          requests:
+            cpu: 100m
