@@ -137,3 +137,86 @@ running pod that keeps checking for the existence of orphaned data. When this
 pod finds the orphaned data, it can migrate it to the remaining pods. Rather
 than a constantly running pod, you can also use a CronJob resource and run the
 pod periodically.
+
+## Ensuring all client requests are handled properly
+
+### Preventing broken client connections when a pod is starting up
+
+If you don't specify a readiness probe, the pod is always considered ready. It
+will start receiving requests almost immediately - as soon as the first
+kube-proxy updates the iptables rules on its node and the first client pod tries
+to connect to the service.
+All you need to do is make sure that your readiness probe returns success only
+when your app is ready to properly handle incoming requests.
+
+### Preventing broken connection during pod shut-down
+
+The end result is that the pod may still receive client requests after it was
+sent the termination signal. It's clear the pod needs to keep accepting
+connections even after it receives the termination signal up until all the
+kube-proxies have finished updating the iptables rules.
+
+To recap - properly shutting down an application includes these steps:
+
+1. Wait for a few seconds, then stop accepting new connections.
+2. Close all keep-alive connections not in the middle of a request.
+3. Wait for all active requests to finish.
+4. Then shut down completely.
+
+## Making your apps easy to run and manage in Kubernetes
+
+### Manageable container images
+
+Deploying new pods and scaling them should be fast. This demands having small
+images without unnecessary cruft. Application built with go don't need to
+include anything else apart from the app's single binary executable file.
+
+### Properly tagging your images and using imagePullPolicy wisely
+
+Keep in mind that if you use mutable tags, you'll need to set the
+imagePullPolicy field in the pod spec to Always. If the image pull policy is set
+to Always, the container runtime will contact the image registry every time a
+new pod is deployed. This slows down pod startup a bit, because the node needs
+to check if the image has been modified. Worse yet, this policy prevents the pod
+from starting up when the registry cannot be contacted.
+
+### Using multi-dimensional instead of single-dimensional labels
+
+Don't forget to label all your resources, not only Pods. Make sure you add
+multiple labels to each resource, so they can be selected across each individual
+dimension.
+
+* The name of the application the resource belongs to.
+* Application tier(front-end, back-end, and so on).
+* Environment(development, AQ, staging, production, and so on)
+* Type of release(stable, canary, green or blue for green/blue deployments,
+  and so on)
+* Tenant(if you're running separate pods for each tenant instead os using
+  namespaces)
+* Shared for shared systems.
+
+#### Describe each resource through annotations
+
+To add additional information to your resources use annotations. At the least,
+resources should contain an annotation describing the resource and an annotation
+with contact information of the person responsible for it.
+
+#### Providing information on why the process terminated
+
+Kubernetes feature that make it possible to show the reason why a container
+terminated in the pod's status. You do this by having the process write a
+termination message to a specific file in the container's filesystem. The
+contents of this file are read by the Kubelet when the container terminates and
+are shown in the output of `kubectl describe pod`. If an application uses this
+mechanism, an operator can quickly see why the app terminated without even
+having to look at the container logs.
+
+The default file the process needs to write the message is
+`/dev/termination-log`, but it can be changed by setting the
+`terminationMessagePath` field in the container definition in the pod spec.
+
+#### Handling application logs
+
+While we're on the subject of application logging, let's reiterate that apps
+should write to the standard output instead if files. This makes it easy to view
+logs with the kubectl logs command.
