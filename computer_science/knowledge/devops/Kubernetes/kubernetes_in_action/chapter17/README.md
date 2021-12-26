@@ -70,3 +70,70 @@ two ways. Until the hook completes, the container will stay in the Waiting state
 with the reason `ContainerCreating`. Because of this, the pod's status will be
 `Pending` instead of `Running`. If the hook fails to run or returns a non-zero
 exit code, the main container will be killed.
+
+```yaml
+spec:
+  containers:
+  - image: luksa/kubia
+    name: kubia
+    lifecycle:
+      postStart:
+        exec:
+          command:
+          - sh
+          - -c
+```
+
+The standard and error outputs of command-based post-start hooks aren't logged
+anywhere, so you may want to have the process the hook invokes log to a file in
+the container's filesystem, which will allow you to examine the contents of log
+file.
+
+### Pre-stop hook
+
+A pre-stop hook is executed immediately before a container is terminated.When a
+container needs to be terminated, the Kubelet will run the pre-stop hook, if
+configured, and only then send a SIGTERM to the process. A pre-stop hook can be
+used to initiate a graceful shutdown of the container, if it doesn't shut down
+gracefully upon receipt of a SIGTERM signal.
+
+```yaml
+liftcycle:
+  preStop:
+    httpGet:
+      port: 8080
+      path: shutdown
+```
+
+## Understand pod shutdown
+
+A pod's shut-down is triggered by the deletion of the Pod object through the API
+server. Upon receiving an HTTP DELETE request, the API server doesn't delete the
+object yet, but only sets a deletetionTimestamp field in it. Pods that have the
+deletionTimeStamp field set are terminating.
+
+Once the kubelet notices the pod needs to be terminated, it starts terminating
+each of the pod's cotnainers. It gives each container time to shut down
+gracefully, but the time is limited. That time is called the termination grace
+period and is configurable per pod.
+
+1. Run the pre-stop hook, if one is configured, and wait for it to finish.
+2. Send the SIGTERM signal to the main process of the container
+3. Wait until the container shuts down cleanly or until the termination grace
+   period runs out.
+4. Forcibly kill the process with SIGKILL, if it hasn't terminated gracefully
+   yet.
+
+```shell
+kubectl delete pod mypod --grace-period=5
+kubectl delete pod mypod--grace-period=0 --force
+```
+
+### Implementing the proper shutdown handler in your application
+
+Replace critical shut-down procedures with dedicated shut-down procedure pods.
+The proper way to handle this problem is by having a dedicated, constantly
+running pod that keeps checking for the existence of orphaned data. When this
+pod finds the orphaned data, it can migrate it to the remaining pods. Rather
+than a constantly running pod, you can also use a CronJob resource and run the
+pod periodically.
