@@ -86,4 +86,18 @@ A load balancer distributes user traffic across multiple instance of
 your application. Cloud Load Balancing is a fully distributed,
 software-defined managed service.
 
+## Storage
+
+* Persistent Disks for block storage
+* Filestore for network file storage
+* Cloud Storage for object storage.
+
+### Cloud Storage
+
+Google Cloud Storage is the object storage service offered by Google Cloud.
+It provides some very interesting out-of-the-box features such as object
+versioning or fine-grain permissions (per object or bucket), that can make
+development easy and help reduce operational overheads.
+
+![cloud storage](./images/cloud_storage.png)
 
