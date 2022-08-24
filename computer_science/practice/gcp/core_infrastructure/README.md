@@ -101,3 +101,36 @@ development easy and help reduce operational overheads.
 
 ![cloud storage](./images/cloud_storage.png)
 
+## App Engine
+
+App Engine is a fully managed, serverless platform for developing and hosting
+web applications at scale. You can choose from several popular languages,
+libraries, and framework to develop your apps, and then let App Engine take
+cate of provisioning servers and scaling your app instances based on demand.
+
+## Cloud Endpoints
+
+Cloud endpoints uses an NGINX-based proxy and distributed architecture for performance
+and scale. Using an OpenAPI Specification or one of our API frameworks, Cloud
+Endpoints gives you the tools you need for API development and provides insight
+with Cloud Logging, Cloud Mornitoring, and Cloud Cloud Trace.
+
+## Cloud Run
+
+Cloud run is a managed compute platform that enables you to run stateless containers
+that are invocable via HTTP requests. Cloud run is serverless: it abstracts away
+all infrastructure management, so you can focus on what matters most - building
+great applications.
+
+![Cloud Run](./images/cloud_run.png)
+
+## Cloud Function
+
+## Terraform
+
+Refer to [Terraform GCloud Code](./codes) for demo.
+![Terraform](./images/terraform_gcloud.png)
+
+
+
+
