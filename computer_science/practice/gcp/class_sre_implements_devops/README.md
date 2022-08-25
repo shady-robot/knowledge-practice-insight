@@ -74,4 +74,33 @@ reliable and scalable.
 ### Work to minimize toil
 
 Any manual, structurally mandated operational task is abhorrent. We believe that
-if a machine can perform a desired operation, then a machine often should.
+if a machine can perform a desired operation, then a machine often should. Any
+time spent on operational tasks means time not spent on project work - and
+project workis how we make our services more reliable and scalable.
+
+### automate this year's job away
+
+The real work in this area is determining what to automate, under what
+conditions, and how to automate it. Hard limit of how much time a team member
+can spent on toil, as opposed to engineering that produce lasting value: 50%.
+
+### Move fast by reducing the cost of failure
+
+A reduced mean time to repair(MTTR) for common faults results in increased
+product developer velocity, as engineers don't have to waste time and focus
+cleaning up after these issues. SREs are specially charged with improving
+undesireably late problem discovery, yielding benefits for the company as a whole.
+
+### Share ownership with developers
+
+In general, SRE has particular expertise around the availability, latency,
+performance, efficiency, chane management, monitoring, emergency response, and
+capacity plaining of the service thet are looking after. Ideally, both development
+and SRE team should have a holistic view of the stack - the frontend, backend,
+libraries, storage, kernel, and physical machine - and no team should jealously
+own single components.
+
+### Use the Same Tooling, Regardless of Function or Job Title
+
+Team minding a service should use the same tools, regardless of their role in
+the organization.
