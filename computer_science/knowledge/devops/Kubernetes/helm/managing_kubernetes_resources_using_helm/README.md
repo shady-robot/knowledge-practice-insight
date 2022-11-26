@@ -60,3 +60,23 @@ helm search repo bitnami --output yaml
 helm search repo wordpress
 ```
 
+### Helm install charts
+
+```shell
+$ helm install wordpress bitnami/wordpress --values=wordpress-values.yaml
+    --namespace chapter3 --version 12.1.6
+$ helm show values bitnami/wordpress --version 12.1.6
+
+$ helm get manifest
+# To return the manifest for a named release
+
+$ helm get nodes
+# To return the notes for a named release
+
+$ helm get all
+# To return all the information about a named release.
+```
+
+When secrets need to be provided, the recommended approach is to use the
+`--set` flag to prevent them from being committed to source control.
+
