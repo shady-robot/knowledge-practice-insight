@@ -41,3 +41,22 @@ specifies different Kubernetes clusters and how to interact with them. Since
 Helm authenticates to Kubernetes using the credentials defined in the
 `kube-config` file, Helm is given the same level of access.
 
+## Helm charts
+
+Helm charts can be made available for consumption by publishing them to a chart
+repository. A chart repository is a location where packaged charts can be stored
+and shared.
+
+To make it easier to find chart repositories(and other Kubernetes-related
+artifacts), the Kubernetes community created a platform called Artifact Hub.
+Artifact Hub is a centralized location for upstream Kubernetes artifacts, such
+as Helm charts, operations, plugins and more.
+
+```shell
+helm search hub wordpress --max-col-width=0
+helm repo add bitnami https://raw.githubus.com/bitnami
+helm repo list
+helm search repo bitnami --output yaml
+helm search repo wordpress
+```
+
