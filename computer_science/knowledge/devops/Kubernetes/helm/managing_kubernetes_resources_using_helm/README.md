@@ -33,3 +33,11 @@ $ helm uninstall redis --namespace=redis
 * Deploying resources in an intelligent order(resource creation order)
 * Provide automated life cycle hooks
 
+## Authentication
+
+Helm needs to be able to authenticate with a Kubernetes cluster to deploy and
+manage applications. It authenticates by referencing a `kubeconfig` file, which
+specifies different Kubernetes clusters and how to interact with them. Since
+Helm authenticates to Kubernetes using the credentials defined in the
+`kube-config` file, Helm is given the same level of access.
+
