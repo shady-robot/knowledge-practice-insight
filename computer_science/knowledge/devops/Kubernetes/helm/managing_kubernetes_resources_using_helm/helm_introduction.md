@@ -80,3 +80,12 @@ $ helm get all
 When secrets need to be provided, the recommended approach is to use the
 `--set` flag to prevent them from being committed to source control.
 
+### Helm history
+
+```shell
+$ helm upgrade wordpress bitnami/wordpress --values wordpress-values.yaml
+    -n chapter3 --version 12.1.6
+$ kubectl get secrets -n chapter3
+$ helm get values wordpress --revision 3 -n chapter3
+$ helm rollback wordpress 3 -n chapter3
+```
