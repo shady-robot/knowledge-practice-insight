@@ -56,3 +56,19 @@ helm dependency update # Downloads the dependencies listed in `Charts.yaml` and
                        # generates a `Charts.lock` file
 helm dependency build # Download the dependencies listed in `Chart.lock`.
 ```
+
+### Conditions
+
+Conditional dependencies can be created by using the condition and tags fields
+of the dependencies map. The `condition` field is used to list `Boolean` values
+that, if present, toggle the inclusion of the dependency.
+The `condition` is best used for enabling individual dependencies using the
+`chartname.enabled` format, `tags` is used to enable or disable one or more
+dependencies by associating each dependency with descriptive labels.
+
+```shell
+$ helm upgrade conditional-example chapter5/examples/tags-example
+    --set tags.backend=false --set tags.database=true –n chapter5
+$ helm get manifest conditional-example –n chapter5 | grep mariadb
+```
+
