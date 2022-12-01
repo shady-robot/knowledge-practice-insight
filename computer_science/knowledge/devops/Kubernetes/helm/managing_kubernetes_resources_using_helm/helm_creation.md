@@ -72,3 +72,19 @@ $ helm upgrade conditional-example chapter5/examples/tags-example
 $ helm get manifest conditional-example –n chapter5 | grep mariadb
 ```
 
+## Templates
+
+Helm templates are used to dynamically generate Kubernetes YAML resources. They
+consume a set of default and user-provided values to generate resources that
+comprise a Kubernetes application.
+
+Helm templates contain various different actions, or strings, that begin with
+two opening curly brace ({{) and end with accompanying two closing curly brace
+(}}). Actions mark locations where data processing occurs or where control
+structures such as conditionals and loops are implemented.
+
+The `helm template` is used to render template resources locally, but not
+install them to the Kubernetes clusters.
+
+`helm template <RELEASE_NAME> <CHART_NAME> [flags]`
+
