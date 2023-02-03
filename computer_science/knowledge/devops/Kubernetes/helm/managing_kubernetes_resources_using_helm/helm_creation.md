@@ -88,3 +88,33 @@ install them to the Kubernetes clusters.
 
 `helm template <RELEASE_NAME> <CHART_NAME> [flags]`
 
+### Built-in objects
+
+Built-in objects are essential building blocks that you can used to write your
+own Helm charts.
+
+| Object  | Definition  |
+|---|---|
+| .Values  | Used to access values in the `value.yaml` file or values that were provided using the --valued and --set flags  |
+| .Release  | Used to access metadata about the Helm release  |
+| .Chart | Used to access metadata about the Helm chart |
+| .Template | Used to access metadata about chart templates |
+| .Capabilities | Used to access information about the Kubernetes cluster |
+| .File | Used to access arbitrary files within a Helm chart directory |
+| . | The root object |
+
+#### The Release object
+
+Release is one of the top-level objects that you can access in your templates.
+Release: This object describes the release itself. It has several objects inside
+of it:
+
+* Release.Name: The release name
+* Release.Namespace: The namespace to be released into
+* Release.IsUpgrade: This is set to true if the current operation is an
+  upgrade or rollback.
+* Release.IsInstall: This is set to true id the current operation is an install
+* Release.Revision: The revision number for this release.
+* Release.Service: The service that is rendering the present template.
+
+Refer to [Helm Objects](https://helm.sh/docs/chart_template_guide/builtin_objects/#helm).
