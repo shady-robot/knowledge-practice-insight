@@ -24,3 +24,15 @@ Why we need Redux?
 3. Redux offers a structured approach for how to go about making updates to
   state.
 
+## Actions and reducers
+
+An "action" in Redux terms is simply "a thing that happened" expressed as a
+plain Javascript Object. They don't describe intent, they describe facts that
+happened.
+
+* Keep writing action types past-intense.
+* Actions are like reports. Only report what matters, only report the facts.
+* The recepient, not the sender determines how a given report affects the state.
+* Actions often have a payload of some type. Try to attaching additional details
+  about the action as a property called `payload`.
+
