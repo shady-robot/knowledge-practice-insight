@@ -36,3 +36,23 @@ happened.
 * Actions often have a payload of some type. Try to attaching additional details
   about the action as a property called `payload`.
 
+## Action creators
+
+An action creator is a function that literally creates an object. In Redux,
+action creators simply return an action object and pass the argument value if
+necessary.
+
+```js
+const changeWheel = (payload) => {
+    return {
+        type: "CHANGE_WHEEL",
+        payload
+    }
+}
+```
+
+`bindActionCrator` is a utility that takes an action creator(or a while object
+of action creators) and binds them all to the `dispatch` function you got from
+a store.
+
+Refer to [bindActionCreator example](./action_creator_bind.js).

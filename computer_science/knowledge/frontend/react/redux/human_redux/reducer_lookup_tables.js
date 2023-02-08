@@ -1,6 +1,5 @@
 /*
  * reducer_lookup_tables.js
- * Copyright (C) 2023 shady <shady@MrRobot.local>
  *
  */
 const cases = {
