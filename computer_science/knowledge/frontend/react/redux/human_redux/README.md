@@ -81,6 +81,17 @@ const loggingMiddleware = store => next => action => {
   console.log('state after action:', store.getState())
   return result
 }
-
 ```
+
+## Using state in your views
+
+The Provider take the Redux `store` that you give as a property and will put it
+into React's `context` API so that it can be available to any component rendered
+inside the `<Provider>` that needs access to the store.
+
+The basic idea of `connect()` is quite simple: connect a given component in a
+way that allows it access the store. The `<Provider>` puts the store into
+`context`, `connect()` gets some stuff from the store. It lets you connect
+relevant state that your component may need from the store and handles
+re-rendering the component if any of that "connected state" changes.
 
