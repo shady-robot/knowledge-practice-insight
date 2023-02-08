@@ -56,3 +56,31 @@ of action creators) and binds them all to the `dispatch` function you got from
 a store.
 
 Refer to [bindActionCreator example](./action_creator_bind.js).
+
+## Middleware and store enhancers
+
+1. A store enhancer, enhances or adds additional capabilities to the store. It
+  could change how reducers process data, or how dispatch works.
+2. Middleware is a function that lets up "tap into" what's happening inside
+  Redux when we dispatch an action.
+
+```js
+// createStore(reduccer, preloadState, enhancer)
+import { createStore, applyMiddleware } from 'redux'
+import rootReducer from './reducers'
+import reduxLogger from 'redux-logger'
+import reduxThunk from 'redux-thunk'
+
+const store = createStore(rootReducer, applyMiddleware(reduxLogger, reduxThunk))
+
+// Example of middleware
+
+const loggingMiddleware = store => next => action => {
+  console.log('action:', action)
+  const result = next(action)
+  console.log('state after action:', store.getState())
+  return result
+}
+
+```
+
