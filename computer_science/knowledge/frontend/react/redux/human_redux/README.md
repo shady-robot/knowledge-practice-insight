@@ -95,3 +95,39 @@ way that allows it access the store. The `<Provider>` puts the store into
 relevant state that your component may need from the store and handles
 re-rendering the component if any of that "connected state" changes.
 
+## Selectors
+
+A selector is a function that takes the current application state and return the
+relevant portion needed by the view. Selector let us ask question of our state.
+Think of our application state as a database, we could say if action cause
+"write" to the database, selectors are how we do "reads" from the database.
+
+```js
+const selectPagesOfResults = appState => {
+    const {results} = appState
+    if(!results|| !results.length) {
+        return 0
+    }
+    return MAth.ceil(results.length / 20)
+}
+```
+
+A common mistake is to try to calculate and store this derived data as part of
+the application state. An excellent way to tell if you're doing this is if
+you're finding yourself writing a reducer that updates a derived value as part
+of handling a specific action. It's pretty safe to say you should probably be
+using a selector to read that derived value instead.
+
+Only dispatch things that are actually "newsworthy", because there's potentially
+a lot of code that will be re-evaluated with each dispatch.
+
+By isolating these pieces of logic into small, simple, pure functions that just
+returned an answer to a specific question we were able to reduce the complexity
+of the components in the app dramatically. Components were no longer responsible
+for encapsulating application logic, they merely has to be connected to the
+right selectors.
+
+Reselect lets us derive increasingly complex answers while containing complexity
+. These patterns allow us to efficiently answer incredibly complex questions of
+our state by isolating chunks of logic into their separate selectors.
+
