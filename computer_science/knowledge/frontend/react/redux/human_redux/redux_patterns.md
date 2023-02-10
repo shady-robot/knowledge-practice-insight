@@ -46,9 +46,23 @@ of creating loops. To avoid loops when using this pattern, we must ensure that
 the action that our reactor returns will immediately cause a state change that
 the reactor checks for. If not, you'll have infinite loops.
 
-## Redux is beautiful the way it is
+### Redux is beautiful the way it is
 
 Letting our state inform what should happen next grants us significantly more
 power than writing procedures that should occur in response to specific actions.
+
+## Reliable apps
+
+If we want to build trust with our users, it is downright irresponsible for us
+to assume we'll always have a fast, reliable connection.
+
+ A robust solution:
+
+1. Retry if there were network errors
+2. Give up if there were "permanent" failures such as the user blocking
+  geolocation.
+3. Persist any time it succeeded and automatically pick up where it left off.
+4. Automatically determine what to do next based on how long it had been.
+
 
 
