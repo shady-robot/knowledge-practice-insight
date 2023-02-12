@@ -64,5 +64,10 @@ to assume we'll always have a fast, reliable connection.
 3. Persist any time it succeeded and automatically pick up where it left off.
 4. Automatically determine what to do next based on how long it had been.
 
+## Persisting state locally
 
+For the vast majority of applications, you'll likely want to treat this cache as
+an optional enhancement. If we're unable to read in existing cached data when
+the app loads, it shouldn't cause the app to error, it should just fail silently
+. After certain actions, I want to persist the state from certain reducers.
 
