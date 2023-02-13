@@ -29,3 +29,36 @@ function Example() {
   access to imperative escape hatches and don't require you to learn complex
   functional or reactive programming techniques.
 
+## What is React Hooks
+
+Hooks are functions that let you "hook into" React state and lifecycle features
+from function components. React provides a few built-in Hooks like `useState`.
+You can also create your own Hooks to reuse stateful behavior between different
+components.
+
+## When to Use
+
+If you write a function component and realize you need to add some state to it,
+previously you had to convert it to a class. Now you can use a Hook inside the
+existing function component.
+
+## How to Use
+
+* Only call hooks at the top level
+  Don't call Hooks inside loops, conditions, or nested functions. Always use
+  hooks at the top level of your React function, before any early returns. By
+  following this rule, you ensure that Hooks are called in the same order each
+  time a component renders.
+* Only call hooks from React Functions
+  * Call hooks from React components
+  * Call hooks from custom hooks
+
+Use the `eslint-plugin-react-hooks` to enforce the two rules.
+
+Refer to [Hooks Rules](https://reactjs.org/docs/hooks-rules.html) for more.
+
+## State Hook
+
+`useState` returns a pair: the current state value and a function that lets you
+update it. The only argument to `useState` is the initial state.
+
