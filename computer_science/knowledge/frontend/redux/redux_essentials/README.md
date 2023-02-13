@@ -102,4 +102,3 @@ calls `someSelector(store.getState())` for us, and returns the result.
 
 In a React + Redux app, your global state should go in the Redux store, and your
 local state should stay in React components.
-
