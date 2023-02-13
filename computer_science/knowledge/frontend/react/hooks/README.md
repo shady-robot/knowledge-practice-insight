@@ -62,3 +62,21 @@ Refer to [Hooks Rules](https://reactjs.org/docs/hooks-rules.html) for more.
 `useState` returns a pair: the current state value and a function that lets you
 update it. The only argument to `useState` is the initial state.
 
+## Effect Hook
+
+The Effect Hook, `useEffect`, adds the ability to perform side effects from a
+function component.
+
+By default, React runs the effects after every render - including the first
+render. Effects may also optionally specify how to "clean up" after them by
+returning a function.
+
+```js
+useEffect(() => {
+    ChatAPI.subscribeToFriendStatus(props.friend.id, handleStatusChange);
+    return () => {
+      ChatAPI.unsubscribeToFriendStatus(props.friend.id, handleStatusChange);
+    }
+})
+```
+
