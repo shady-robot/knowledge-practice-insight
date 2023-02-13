@@ -52,3 +52,54 @@ are done immutably.
   can help avoid repeating logic as different parts of the app need to read the
   same data.
 
+## Redux App Structure
+
+Reduce Slices: A "slice" is a collection of Redux reducer logic and actions for
+a single feature in your app, typically defined together in a single file.The
+name comes from splitting up the root Redux state object into multiple "slice"
+of state.
+
+```js
+function rootReducer(state = {}, action) {
+    return {
+        users: usersReducer(state.users, action),
+        posts: postsReducer(state.posts, action),
+        comments: commentsReducer(state.comments, action)
+    }
+}
+
+const store = configureStore({
+  reducer: rootReducer
+})
+```
+
+Redux Toolkit has a function called `createSlice`, which takes care of the work
+of generating action type strings, action creator functions, and action objects.
+All you have to do is define a name for this slice, write an object that has
+some reducer functions in it, and it generates the corresponding action code
+automatically. The string from the `name` option is used as the first part of
+each action type, and the key name of each reducer function is used as the
+second part.
+
+`createSlice` uses a library called `Immer` inside. Immer uses a special JS tool
+called a `Proxy` to wrap the data you provide, and lets you write code that
+"mutate" that wrapped data. But Immer tracks all the changes you've tried to
+make, and then uses that list of changes to return a safely immutably updated
+value, as if you'd written all the immutable update logic by hand.
+
+A `thunk` is a specific kind of Redux function that can contain asynchronous
+logic. Thunks are written using two functions:
+
+* An inside thunk function, which gets `dispatch` and `getState` as arguments.
+* The outside creator function, which creates and returns the thunk function.
+
+### Reading data with useSelector
+
+The `useSelector` hook lets our component extract whatever pieces of data it
+needs from the Redux store state. The `useSelector` takes care of talking to the
+Redux store behind the scenes for us. If we pass in a selector function, it
+calls `someSelector(store.getState())` for us, and returns the result.
+
+In a React + Redux app, your global state should go in the Redux store, and your
+local state should stay in React components.
+
