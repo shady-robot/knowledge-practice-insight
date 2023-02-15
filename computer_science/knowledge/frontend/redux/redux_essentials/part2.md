@@ -25,3 +25,45 @@ state.
   * Reducer can contain whatever logic is needed to calculate the next state.
   * Action objects should contain just enough info to describe what happened.
 
+## Async Logic and  Data Fetching
+
+By default, a Redux store doesn't know anything about async logic. It only knows
+how to synchronously dispatch actions, update the state by calling the root
+reducer function, and notify the UI that something has changed.
+
+The `Redux middleware`:
+
+* Execute extra logic when any action is dispatched
+* Pause, modify, delay, replace, or halt dispatched action
+* Write extra code that has access to `dispatch` and `setState`
+* Teach `dispatch` how to accept other values besides plain action objects, such
+  as functions and promises, by intercepting them and dispatching real action
+  object instead
+
+The most common async middleware is `redux-thunk`, which lets you write plain
+functions that may contain async logic directly. Redux Toolkit's
+`configureStore` function automatically sets up the thunk middleware by default,
+and we recommend using thunks as a standard approach for writing async logic
+with Redux.
+
+```js
+const logAndAdd = amount => {
+    return (dispatch, getState) => {
+        const stateBefore = getState()
+        cosnole.log(`Counter before: ${stateBefore.counter}`)
+        dispatch(incrementByAmount(amount))
+        const stateAfter = getState()
+        console.log(`Counter after: ${stateAfter.counter}`)
+    }
+}
+```
+
+Thunks are typically written in "slice" files, which normally as a separate
+functions in the same slice file. That way, they have to access to the plain
+action creators for that slice, and it's easy to find where the thunk lives.
+
+### Selectors
+
+It's often a good idea to encapsulate data lookups by writing reusable selectors
+. You can also create "memorized" selectors that can help improve performance.
+
