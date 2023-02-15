@@ -62,6 +62,58 @@ Thunks are typically written in "slice" files, which normally as a separate
 functions in the same slice file. That way, they have to access to the plain
 action creators for that slice, and it's easy to find where the thunk lives.
 
+You can dispatch additional actions to help track the loading status of an API
+call. The typical pattern is dispatching a "pending" action before the call,
+then either a "success" containing the data or a "failure" action containing the
+error. Loading state should usually be stored as an enum, like `"idle" |
+"loading" | "succeeded" | "failed"`.
+
+### createAsyncThunk
+
+```js
+export const fetchPosts = createAsyncThunk('posts/fetchPosts', async () => {
+  const response = await client.get('/fakeApi/posts')
+  return response.data
+})
+
+const postsSlice = createSlice({
+  name: 'posts',
+  initialState,
+  reducers: {
+    // omit existing reducers here
+  },
+  extraReducers(builder) {
+    builder
+      .addCase(fetchPosts.pending, (state, action) => {
+        state.status = 'loading'
+      })
+      .addCase(fetchPosts.fulfilled, (state, action) => {
+        state.status = 'succeeded'
+        // Add any fetched posts to the array
+        state.posts = state.posts.concat(action.payload)
+      })
+      .addCase(fetchPosts.rejected, (state, action) => {
+        state.status = 'failed'
+        state.error = action.error.message
+      })
+  }
+})
+```
+
+Redux Toolkit has a `createAsynThunk` API that dispatches these actions for you.
+
+* `createAsynThunk` accepts a "payload creator" callback that should return a
+  Promise, and generates `pending/fulfilled/rejected` action types automatically
+* Generated action creators like `fetchPosts` dispatch those actions based on
+  the `Promise` you return.
+* You can listen for these action types in `createSlice` using the
+  `extraReducers` field, and update the state in reducers based on those actions
+* Action creators can be used to automatically fill in the keys of the
+  `extraReducers` object so the slice knows what actions to listen for.
+* Thunks can return promises. For `createAsynThunk` specially, you can `await
+  dispatch(someThunk()).unwrap()` to handle the request success or failure at
+  the component level
+
 ### Selectors
 
 It's often a good idea to encapsulate data lookups by writing reusable selectors
