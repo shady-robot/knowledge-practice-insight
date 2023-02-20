@@ -119,3 +119,51 @@ Redux Toolkit has a `createAsynThunk` API that dispatches these actions for you.
 It's often a good idea to encapsulate data lookups by writing reusable selectors
 . You can also create "memorized" selectors that can help improve performance.
 
+* Redux Toolkit re-exports the `createSelector` function from Reselect, which
+  generates memorized selectors.
+* Memorized selectors will only recalculate the results if the input selectors
+  return new values.
+* Memoization can skill expensive calculations, and ensure the same result
+  references are returned.
+
+### Normalized Data
+
+Data normalization refers to a technique for organizing and structuring data in
+a way that is efficient and flexible for use in an application. The idea behind
+data normalization is to break up complex data structures into smaller, more
+manageable pieces that can be store and queries more easily. This can involve
+splitting data into separate tables or collections, using IDs to link related
+data together and avoiding duplication of data whenever possible.
+
+Managing Normalized state with `createEntityAdapter`
+
+Redux Toolkit's `createEntityAdapter` API provides a standardized way to store
+your data in a slice by taking a collection of items and putting them into the
+shape of `{ids: [], entities: {}}`. Along with this predefined state shape, it
+generates a set of reducer functions and selectors that known how to work with
+that data.
+
+Redux Toolkit's `createEntityAdapter` APIs helps manage normalized data in a
+slice.
+
+1. Items IDs can be kept in sorted by passing in a `sortComparer` option
+2. The adapter object includes:
+  * `adapter.getInitialState`, which can accept additional state field like
+    loading state.
+  * Prebbuilt reducers for common case, like `setAll, addMany, upsertOne,
+    removeMany`
+  * `adapter.getSelectors` which generates selectors like `selectAll` and
+    `selectById`
+
+### Optimize React Component Rendering
+
+1. Avoid creating new object/array references inside of `useSelector` - those
+  will cause unnecessary re-renders.
+2. Memoized selector functions can be passed to `useSelector` to optimize
+  rendering
+3. Components can be wrapped in `React.memo()` to only re-render if their props
+  change
+4. List rendering can be optimized by having list parent components read just an
+  array of item IDs, passing the IDs to list item children, and retrieving items
+  by ID in the children
+
