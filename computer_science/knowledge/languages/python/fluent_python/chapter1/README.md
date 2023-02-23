@@ -42,3 +42,6 @@ three essentail interfaces that every collection should implement:
 * Iterable to support for, unpacking, and other forms of iteration.
 * Sized to support the len built-in function
 * Container to support the in operator
+
+By implementing special methods, your objects can behave like the built-in types
+, enableing the expressive coding style the community considers Pythonic.
