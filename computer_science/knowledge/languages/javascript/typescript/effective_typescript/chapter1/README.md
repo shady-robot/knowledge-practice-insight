@@ -42,3 +42,31 @@ part of compilation to JavaScript is simply remove all the `interfaces`, `types`
     build time overhead.
   * The code that TypeScript emits to support older runtimes may incur a
     performance overhead vs native implementations.
+
+## Structural Typing
+
+Javascript is inherently duck typed: if you pass a function a value with all the
+right properties, it won't care how you made the value. It will just use it.
+Having a good grasp of structural typing will help you make sense of errors and
+non-errors and help you write more robust code.
+
+* Understand that Javascript is duck typed and TypeScript uses structural typing
+  to model this: values assignable to your interfaces might have properties
+  beyond those explicitly listed in your type declaration.
+* Be aware that classes also follow structural typing rules. You may not have an
+  instance of the class you expect.
+* Use structural typing to facilitate unit testing.
+
+When a symbol has a type, the TypeScript language services are able to provide
+intelligent autocomplete and contextual documentation.
+
+## Limit Use of the any type
+
+* There's no type safety with any types
+* Any lets you break Contracts
+* There are no language services for any types
+* Any types mask bugs when you refactor code
+* Any hides your type design
+* Any undermines confidence in the type system
+
+

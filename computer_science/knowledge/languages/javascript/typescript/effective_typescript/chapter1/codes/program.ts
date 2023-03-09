@@ -121,11 +121,44 @@ async function setLight(){
     setLightSwitch(result.lightSwitchValue)
 }
 
+// Structural Typing
 //
+// Example of using structural typing to facilitate unit testing
 
+interface Author {
+    first: string;
+    last: string;
+}
 
-setLightSwitch(null)
+// PostgresDB should be import somewhere else
+interface PostgresDB {
+    runQuery:  (sql:string) => any[];
+    status: boolean;
+}
+function getAuthors(database: PostgresDB):Author[] {
+    const authorRows = database.runQuery(`SELECT FIRST, LAST FROM AUTHORS`);
+    return authorRows.map(row => ({first: row[0], last: row[1]}))
+}
 
+interface DB {
+    runQuery: (sql:string) => any[];
+}
 
+function getAuthorsV2(database: DB): Author[] {
+  const authorRows = database.runQuery(`SELECT FIRST, LAST FROM AUTHORS`);
+  return authorRows.map(row => ({first: row[0], last: row[1]}));
+}
 
+/*** Test code to utilized structural types
+test("getAuthor", () => {
+    const author = getAuthors({
+        runQuery(sql: string) {
+        return [['Toni', 'Morrison'], ['Maya', 'Angelou']];}
+    });
+    expect(authros).toEqual([
+        {first: 'Toni', last: 'Morrison'},
+        {first: 'Maya', last: 'Angelou'}
+    ])
+})
+***/
 
