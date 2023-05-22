@@ -2,7 +2,11 @@
 
 A DAG(Directed Acyclic Graph) is the core concept of Airflow, collecting Tasks
 together, organized with dependencies and relationships to say how they should
-run.
+run. Using the Airflow Python script as a configuration file to specify the
+DAG's structure as code.
+
+An Airflow pipeline is just a Python script that happens to define an Airflow
+DAG object.
 
 ## Declaring a DAG
 
@@ -55,4 +59,40 @@ DAGs will run in one of tow ways:
 
 ```python
 with DAG("my_daily_dag", schedule="0 * * * *"):
+```
+
+## Control Flow
+
+* Branching, where you can select which Task to move onto based on a condition.
+* Latest Only, a special form of branching that only runs on DAGs running
+  against the present.
+* Depends On Past, where tasks can depend on themselves from a previous run.
+* Trigger Rules, which let you set the conditions under which a DAG will run
+  a task.
+
+## DAG Visualization
+
+* You can load up the Airflow UI, navigate to your DAG, and select "Graph
+* You can run `airflow dags show`, which renders it our as an image file.
+
+## TaskGroups
+
+A TaskGroup can be used to organize tasks into hierarchical groups in Graph
+view. It is useful for creating repeating patterns and cutting down visual
+clutter.
+
+By default, child tasks/TaskGroups have their IDs prefixed with the group_id of
+their parent TaskGroup. This helps to ensure uniqueness of group_id throughout
+the DAG.
+
+## Edge Labels
+
+You can label the dependency edges between different tasks in the Graph view,
+this can be especially useful for branching area of your DAG, so you can label
+the conditions under which certain branches might run.
+
+```python
+from airflow.utils.edgemodifier import Label
+
+my_task >> Label("When empty") >> other_task
 ```
