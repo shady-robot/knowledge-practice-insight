@@ -1,0 +1,185 @@
+{
+    "dns": {
+        "servers": [
+            {
+                "tag": "google",
+                "address": "tls://8.8.8.8"
+            },
+            {
+                "tag": "local",
+                "address": "223.5.5.5",
+                "detour": "direct"
+            }
+        ],
+        "rules": [
+            {
+                "outbound": "any",
+                "server": "local"
+            },
+            {
+                "clash_mode": "Direct",
+                "server": "local"
+            },
+            {
+                "clash_mode": "Global",
+                "server": "google"
+            },
+            {
+                "rule_set": "geosite-geolocation-cn",
+                "server": "local"
+            }
+        ],
+        "strategy": "ipv4_only",
+        "final": "google"
+    },
+    "inbounds": [
+      {
+        "type": "tun",
+        "inet4_address": "172.19.0.1/30",
+        "inet6_address": "fdfe:dcba:9876::1/126",
+        "auto_route": true,
+        "strict_route": true,
+        "sniff": true
+      },
+      {
+        "type": "mixed",
+        "listen": "127.0.0.1",
+        "listen_port": 8080,
+        "sniff": true,
+        "domain_strategy": "prefer_ipv4"
+      }
+    ],
+    "outbounds": [
+      {
+        "type": "direct",
+        "tag": "direct"
+      },
+      {
+        "type": "block",
+        "tag": "block"
+      },
+      {
+        "type": "dns",
+        "tag": "dns"
+      },
+      {
+        "type": "selector",
+        "tag": "default",
+        "outbounds": [
+          "socks-out"
+        ]
+      },
+      {
+        "type": "trojan",
+        "tag": "trojan-out",
+        "server": "your_server_name",
+        "server_port": 443,
+        "password": "you_password",
+        "tls": {
+            "enabled": true,
+            "server_name": "you_server_name",
+            "utls": {
+                "enabled": true,
+                "fingerprint": "chrome"
+            }
+        }
+      },
+      {
+        "type": "socks",
+        "tag": "socks-out",
+        "server": "localhost",
+        "server_port": 1080,
+        "version": "5",
+        "udp_over_tcp": {
+          "enabled": true,
+          "version": 2
+        }
+      }
+    ],
+    "route": {
+      "rules": [
+        {
+          "type": "logical",
+          "mode": "or",
+          "rules": [
+            {
+              "network": "udp",
+              "port": 53
+            },
+            {
+              "protocol": "dns"
+            }
+          ],
+          "outbound": "dns"
+        },
+        {
+          "type": "logical",
+          "mode": "or",
+          "rules": [
+            {
+              "network": "udp",
+              "port": 443
+            },
+            {
+              "protocol": "stun"
+            }
+          ],
+          "outbound": "block"
+        },
+        {
+          "ip_is_private": true,
+          "outbound": "direct"
+        },
+        {
+          "clash_mode": "Global",
+          "outbound": "default"
+        },
+        {
+          "clash_mode": "Direct",
+          "outbound": "direct"
+        },
+        {
+          "rule_set": [
+            "geoip-cn",
+            "geosite-geolocation-cn"
+          ],
+          "outbound": "direct"
+        }
+      ],
+      "rule_set": [
+        {
+          "type": "remote",
+          "tag": "geoip-cn",
+          "format": "binary",
+          "url": "https://raw.githubusercontent.com/SagerNet/sing-geoip/rule-set/geoip-cn.srs",
+          "download_detour": "default"
+        },
+        {
+          "type": "remote",
+          "tag": "geosite-geolocation-cn",
+          "format": "binary",
+          "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-geolocation-cn.srs",
+          "download_detour": "default"
+        },
+        {
+          "type": "remote",
+          "tag": "geosite-geolocation-!cn",
+          "format": "binary",
+          "url": "https://raw.githubusercontent.com/SagerNet/sing-geosite/rule-set/geosite-geolocation-!cn.srs",
+          "download_detour": "default"
+        }
+      ],
+      "final": "default",
+      "auto_detect_interface": true
+    },
+    "experimental": {
+      "cache_file": {
+        "enabled": true,
+        "cache_id": "c1"
+      },
+      "clash_api": {
+        "external_controller": "127.0.0.1:9090"
+      }
+    }
+  }
+  

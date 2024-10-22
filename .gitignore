@@ -103,3 +103,5 @@ db.sqlite3
 *.exe~
 # Test binary, built with `go test -c`
 *.test
+
+.DS_Store
