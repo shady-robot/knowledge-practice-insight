@@ -20,3 +20,4 @@ docker run --rm -p 8085:8085 google/cloud-sdk:emulators /bin/bash -c "gcloud bet
 ## References
 
 * [Python Github PubSub Example](https://github.com/googleapis/python-pubsub)
+* [pubsub-emulator-ui](https://github.com/NeoScript/pubsub-emulator-ui)

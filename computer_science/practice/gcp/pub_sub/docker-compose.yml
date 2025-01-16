@@ -1,0 +1,15 @@
+services:
+  pubsub-emulator:
+    image: google/cloud-sdk:emulators
+    command: gcloud beta emulators pubsub start --host-port=0.0.0.0:8085
+    ports:
+      - "8681:8085"
+
+  pubsub-emulator-ui:
+    image: ghcr.io/neoscript/pubsub-emulator-ui:latest 
+    environment:
+      - PUBSUB_EMULATOR_HOST=pubsub-emulator:8085
+    ports:
+      - "8088:80"
+    depends_on:
+      - pubsub-emulator
