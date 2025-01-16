@@ -17,7 +17,12 @@ docker pull google/cloud-sdk:emulators
 docker run --rm -p 8085:8085 google/cloud-sdk:emulators /bin/bash -c "gcloud beta emulators pubsub start --project=some-project-id --host-port='0.0.0.0:8085'"
 ```
 
+Google Cloud Pub/Sub is a fully-managed real-time messaging service that allows you to send and receive message between independent applications. You can leverage Cloud Pub/Sub's flexibility to decouple systems and components hosted on Google Cloud
+platform or elsewhere on the Internet.
+
+
 ## References
 
 * [Python Github PubSub Example](https://github.com/googleapis/python-pubsub)
 * [pubsub-emulator-ui](https://github.com/NeoScript/pubsub-emulator-ui)
+* [Google Cloud Pub/Sub Python Documentation](https://cloud.google.com/pubsub/docs/list-topics#pubsub_list_topics-python)
