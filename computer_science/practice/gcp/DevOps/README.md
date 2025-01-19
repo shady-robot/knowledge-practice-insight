@@ -96,3 +96,32 @@ Controlling access to stored data is essential to ensuring security and privacy 
 * Geo-redundancy
 
 Cloud Storage also provide a feature called Autoclass, which automatically transitions objects to appropriate storage classed based on their access patterns. Autoclass simplifies and automates cost saving for your Cloud Storage data.
+
+## GKE
+
+With the Autopilot mode, which is recommended, GKE manages the underlying infrastructure such as node configuration, autoscaling, autoscaling, auto-upgrades, baseline security configuration, and baseline networking configuration.
+
+### Advanced cluster management features:
+
+1. Google Cloud's load-balancing for Compute Engine instance.
+2. Node pools to designate subnets of nodes within a cluster.
+3. Automatic scaling of your cluster's node instance count.
+4. Automatic upgrade for your cluster's node software.
+5. Node auto-repair to maintain node health and availability.
+6. Logging and monitoring with Google Cloud Observability.
+
+## Cloud Run
+
+1. Write your code
+2. Build and package
+3. Deploy to Cloud Run
+
+Cloud Run will starts your container on demand to handle requests, and ensures that all incoming requests are handled by dynamically adding and removing containers.
+
+Cloud Run functions:
+
+1. Lightweight, event'driven, asynchronous compute solution.
+2. Allows you to create small, single-purpose functions that respond to cloud events without the need to manage a server or a runtime environment.
+3. Construct application workflows from individual business logic tasks and connect and extend cloud services.
+4. Billed to the nearest 100 milliseconds, and only while your code is running.
+5. Supports writing source code in a number of programming languages, include Node.js, Python, Go, Java.
