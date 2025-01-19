@@ -125,3 +125,8 @@ Cloud Run functions:
 3. Construct application workflows from individual business logic tasks and connect and extend cloud services.
 4. Billed to the nearest 100 milliseconds, and only while your code is running.
 5. Supports writing source code in a number of programming languages, include Node.js, Python, Go, Java.
+6. Events from Cloud Storage and Pub/Sub can trigger Cloud Run Functions asynchronously, or use HTTP invocation for synchronous execution.
+
+LLMs are large, general-purpose language models that can be pre-trained and then fine-tuned for specific purpose.
+
+A Prompt is the text that you feed to the model, and prompt engineering is a way of articulating your prompts to get the best response from the model.

@@ -130,7 +130,3 @@ great applications.
 
 Refer to [Terraform GCloud Code](./codes) for demo.
 ![Terraform](./images/terraform_gcloud.png)
-
-
-
-
