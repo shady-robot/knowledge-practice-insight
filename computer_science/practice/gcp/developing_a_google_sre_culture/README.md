@@ -88,5 +88,7 @@ SRE practice that ties to error budgets and creates shared responsibility betwee
 
 SLO(Service-level objectives)s are precise numerical target for system reliability.
 
+SLIs(Service-level indicators) are metrics that measure the performance of a system relative to the SLOs. It's a quantifiable measure of service reliability.
+
 
 
