@@ -1,5 +1,8 @@
 # Next.js
 
+Next.js is a React framework for building full-stack applications. You use React
+Components to build user interfaces, and Next.js for additional features and optimization.
+
 * An intuitive page-based routing system(with support for dynamic routes)
 * Pre-rendering, both static generation(SSG) and server-side rendering(SSR) are
   supported on a per-page basis
@@ -9,6 +12,14 @@
 * Development environment with Fast Refresh support
 * API routes to build API endpoints with Serverless Functions
 * Fully extendable
+
+## Folder Structure
+
+* `/app`: Contains all the routes, components, and logic for your application.
+* `/app/lib`: Contains functions used in your application, such as reusable utility functions and data fetching functions.
+* `/app/ui`: Contains all the UI components for your application.
+* `/public`: Contains all the static assets for your application.
+* `Config files`: `next.config.ts`
 
 ## Routing
 
