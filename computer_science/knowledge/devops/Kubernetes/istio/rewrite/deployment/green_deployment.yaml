@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: green-container
-        image: my-fastapi-app:green
+        image: green-app:latest
         imagePullPolicy: Never
         ports:
         - containerPort: 8000

@@ -28,6 +28,18 @@ spec:
   http:
   - match:
     - uri:
+        prefix: /docs
+    - uri:
+        prefix: /openapi.json
+    - uri:
+        prefix: /example
+    route:
+      - destination:
+          host: docs-service
+          port:
+            number: 8000
+  - match:
+    - uri:
         regex: /red(/|$)(.*)
     rewrite:
       uriRegexRewrite:
@@ -50,35 +62,5 @@ spec:
           host: green-service
           port:
             number: 8000
-# ---
-# apiVersion: networking.istio.io/v1beta1
-# kind: VirtualService
-# metadata:
-#   name: red
-#   namespace: development
-# spec:
-#   hosts:
-#     - "localhost"
-#   http:
-#   - match:
-#     route:
-#       - destination:
-#           host: red-service
-#           port:
-#             number: 8000
-# ---
-# apiVersion: networking.istio.io/v1beta1
-# kind: VirtualService
-# metadata:
-#   name: green
-#   namespace: development
-# spec:
-#   hosts:
-#     - "localhost"
-#   http:
-#   - match:
-#     route:
-#       - destination:
-#           host: green-service
-#           port:
-#             number: 8000
+
+  

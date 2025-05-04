@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: red-deployment
+  name: docs-deployment
   namespace: development
   labels:
-    app: red-app
+    app: docs-app
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      app: red-app
+      app: docs-app
   template:
     metadata:
       labels:
-        app: red-app
+        app: docs-app
     spec:
       containers:
-      - name: red-container
-        image: red-app:latest
+      - name: docs-container
+        image: docs-app:latest
         imagePullPolicy: Never
         ports:
         - containerPort: 8000
