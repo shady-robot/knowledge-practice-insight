@@ -1,0 +1,84 @@
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: isito-gateway
+  namespace: development
+spec:
+  selector:
+    istio: ingress  # Use Istio's ingress gateway
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+      - "*"
+  
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: entrypoint
+  namespace: development
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - isito-gateway
+  http:
+  - match:
+    - uri:
+        regex: /red(/|$)(.*)
+    rewrite:
+      uriRegexRewrite:
+        match: /red(/|$)(.*)
+        rewrite: /\2
+    route:
+      - destination:
+          host: red-service
+          port:
+            number: 8000
+  - match:
+    - uri:
+        regex: /green(/|$)(.*)
+    rewrite:
+      uriRegexRewrite:
+        match: /green(/|$)(.*)
+        rewrite: /\2
+    route:
+      - destination:
+          host: green-service
+          port:
+            number: 8000
+# ---
+# apiVersion: networking.istio.io/v1beta1
+# kind: VirtualService
+# metadata:
+#   name: red
+#   namespace: development
+# spec:
+#   hosts:
+#     - "localhost"
+#   http:
+#   - match:
+#     route:
+#       - destination:
+#           host: red-service
+#           port:
+#             number: 8000
+# ---
+# apiVersion: networking.istio.io/v1beta1
+# kind: VirtualService
+# metadata:
+#   name: green
+#   namespace: development
+# spec:
+#   hosts:
+#     - "localhost"
+#   http:
+#   - match:
+#     route:
+#       - destination:
+#           host: green-service
+#           port:
+#             number: 8000
