@@ -1,0 +1,36 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: v1-vs
+spec:
+  hosts:
+  - "api.example.com"
+  gateways:
+  - app-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /v1
+    route:
+    - destination:
+        host: backend-v1
+        port:
+          number: 3000
+    corsPolicy:
+      allowOrigins:
+      - exact: "*"
+      allowMethods:
+      - POST
+      - GET
+      - OPTIONS
+      allowHeaders:
+      - X-Custom-Header
+      - content-type
+      - authorization
+      - Access-Control-Allow-Origin
+      - Access-Control-Allow-Methods
+      - Access-Control-Allow-Headers
+      exposeHeaders:
+      - X-Expose-Header
+      maxAge: 24h
+      allowCredentials: true

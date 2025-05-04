@@ -59,19 +59,7 @@ way to configure the behavior of the traffic as it reaches the destination servi
 Istio Ingress Gateway is a component of Istio that allows you to expose services outside of the service mesh. It is a load balancer that sits at the edge of the mesh
 and receives incoming HTTP/TCP connections. It can be used to expose services to the public internet, or to other internal networks.
 
-#### Request rewriting
-
-Rewrite rules can be used to modify the contents of requests and responses. They can be used to change the URL, headers, or body of a request or response.
-
-#### Security policies
-
-Istio supports authentication and authorization policies, Mutual TLS(mTLS), and Traffic Control Policy that help to enable security in a mesh.
-
-## Managing API traffic with Istio
-
-Istio simplifies the implementation of tasks like A/B testing, canary rollouts, and staged rollouts with percentage-based traffic splits by making it easier
-to configure service-level properties like circuit breakers, timeouts, and retries at the gateway level. Istio manages traffic using the Envoy proxies and it does not require making changes to the services. Implementing traffic control mechanisms in Istio involves leveraging the various features provided by the service mesh to manage and control the flow of traffic within the microservices.
-
 ## References
 
 * [Istio - Install with Helm](https://istio.io/latest/docs/setup/install/helm/)
+* [Simplify your API management using Istio as API Gateway](https://www.infracloud.io/blogs/simplify-api-management-istio-api-gateway/)
