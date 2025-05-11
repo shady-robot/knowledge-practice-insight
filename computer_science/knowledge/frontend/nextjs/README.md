@@ -21,6 +21,10 @@ Components to build user interfaces, and Next.js for additional features and opt
 * `/public`: Contains all the static assets for your application.
 * `Config files`: `next.config.ts`
 
+By having a special name for the `page` files, Next.js allows you to colocate UI components, test files, and other related code with your routes. Only the content inside the `page` file will be publicly accissble.
+
+The layout file is the best way to create a shared layout that all pages in your application can use.
+
 ## Routing
 
 Next.js has a file-system based router built on the concept of pages.
@@ -50,6 +54,13 @@ necessary for that page. That means when the homepage is rendered, the code for
 other pages is not served initially. In a production build of Next.js, whenever
 `Link` component appear in the browser's viewport, Next.js automatically
 prefetches the code for the linked page in the background.
+
+To improve the navigation experience, Next.js automatically code splits your application by route segments.
+Splitting code by routes means that pages become isolated. If a certain page throws an error, the rest of the application will
+still work.
+
+Next.js automatically prefetches the code for the linked route in the background. By the time the user clicks the link, the code
+for the destination page will already be loaded in the background, and this is what makes the page transition near-instant.
 
 ### Assets
 
@@ -124,4 +135,34 @@ importing them from `pages/_app.js`. You cannot import global CSS anywhere else.
 
 2. Customizing PostCSS Config
 3. Using Sass
+
+## Server Components to fetch data
+
+By default, Next.js applications use React Server Components. Fetching data with Server Components is a relatively new approach:
+
+1. Server Components support Javascript Promises, providing a solution for asynchronous tasks like data fetching natively. You can use
+   `sync/await` syntax without needing `useEffect`, `useState` or other data fetching libraries.
+2. Server Components run on the server, so you can keep expensive data fetches and logic on the server, only sending the result to the client.
+3. Since Server Components run on the server, you can query the database directly without an additional API layer. This saves you from writing
+4. and maintaining additional code.
+
+A "waterfall" refers to sequence of network requests that depend on the completion of previous requests. In the case of data fetching, each request can only
+begin once the previous request has returned data.
+You may want the waterfalls because you want a condition to be satisfied before you make the next request.
+
+In Javascript, you can use the `Promise.all()` or `Promise.allSettled()` functions to initiate all promises at the same time.
+
+```js
+const data = await Promise.all([
+    invoiceCountPromise,
+    customerCountPromise,
+    invoiceStatusPromise,
+])
+```
+
+1. Start executing all data fetches at the same time, which is faster than waiting for each request to complete in waterfall.
+2. Use a native Javascript pattern that can be applied to any library or framework.
+
+
+
 
