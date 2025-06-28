@@ -163,6 +163,59 @@ const data = await Promise.all([
 1. Start executing all data fetches at the same time, which is faster than waiting for each request to complete in waterfall.
 2. Use a native Javascript pattern that can be applied to any library or framework.
 
+### Static rendering
 
+With static rendering, data fetching and rendering happens on the server at build time or when revalidating data.
 
+1. Faster Websites -  Pre-rendered content can be cached and globally distributed when deployed to different host platform.
+2. Reduce Server Load -  Because the content is cached, your server does not have to dynamically generate content for each user request.
+3. SEO - Pre-rendered content is easier for search engine crawlers to index, as the content is already available when the page load.
 
+### Dynamic rendering
+
+1. Real-time data - Dynamic rendering allows your application to display real-time or frequently updated data.
+2. User-specific Content - It's easier to serve personalized content.
+3. Request time information - Dynamic rendering allows you to access information that can only be known at request time.
+
+### Streaming
+
+Streaming is a data transfer technique that allows you to break down a route into smaller "chunks" and progressively stream them from 
+the server to the client as they become ready.
+By streaming, you can prevent slow data requests from blocking your whole page. Streaming works well with React's component model, as each component can be considered a chunk.
+
+`loading.tsx` is a special `Next.js` file built on top of React Suspense. It allows you to create fallback UI to show as a replacement while page content loads.
+
+### Router group
+
+Route groups allow you to organize files into logical groups without affecting the URL path structure. When you create a new folder using parentheses `()`, the name won't be included in the URL path.
+
+### Streaming a component
+
+Suspense allows you to defer rendering parts of your application until some condition is met. You can wrap your dynamic components in Suspense. Then, pass
+it a fallback component to show while the dynamic component loads.
+
+Where you place your suspense boundaries will vary depending on your application. In general, it's a good practice to move your data fetches down to the
+components that need it, and then wrap those components in Suspense.
+
+## Partial Pre-rendering
+
+Combine static rendering, dynamic rendering, and streaming in the same route with Partial Pre-rendering(PPR).
+
+Next.js 14 introduced an experimental version of Partial Pre-rendering - a new rendering model that allows you to combine the benefits of static and dynamic rendering in the same route.
+
+Partial Pre-rendering uses React's Suspense to defer rendering parts of your application until some condition is met. The Suspense fallback is embedded into
+the initial HTML file along with the static content. At build time, the static content is pre-rendered to create a static shell. The rendering of a dynamic content is postponed until the user requests the route.
+
+## URL search params
+
+1. Bookmarkable and shareable URLs.
+2. Server-side rendering: URL parameters can be directly consumed on the server to render the initial state, making it easier to handle server rendering.
+3. Analytics and tracking: HAving search queries and filters directly in the URL makes it easier to track user behavior without requiring additional client-side logic.
+
+### Debouncing
+
+Debouncing is a programming practice that limits the rate at which a function can fire. 
+
+1. Trigger Event: When an event that should be debounced(like a keystroke in search box) occurs, a timer starts.
+2. Wait: If a new event occurs before the timer expires, the timer is reset.
+3. Execution: If the timer reaches the end of its countdown, the debounced function is executed.
