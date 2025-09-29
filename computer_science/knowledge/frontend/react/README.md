@@ -29,3 +29,21 @@ React decides whether a JSX tag is a Component or an Element based on the first 
 Components start with an uppercase letter, and Elements start with a lowercase letter.
 
 JSX has a limitation in that you can't return multiple elements from a component. Fragements wrap multiple React elements without adding an extra element to the DOM.
+
+React has a Strict mode, which helps you find common bugs in your components early during development.
+
+```js
+import { StrictMode } from "react";
+import { CreateRoot } from "react-dom/client";
+
+function App() {
+  return <h1>My App</h1>;
+}
+
+const root = document.querySelector("#root");
+createRoot(root).render(
+  <StrictMode>
+    <App />
+  </StrictMode>
+);
+```
